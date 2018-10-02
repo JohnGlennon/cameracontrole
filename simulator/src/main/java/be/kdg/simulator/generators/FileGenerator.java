@@ -1,6 +1,8 @@
 package be.kdg.simulator.generators;
 
 import be.kdg.simulator.model.CameraMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
@@ -16,22 +18,42 @@ import java.util.List;
 @ConditionalOnProperty(name = "generator.type", havingValue = "file")
 public class FileGenerator implements MessageGenerator {
 
-    @Value("${filepath}")
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileGenerator.class);
+
     private String filepath;
+    private List<CameraMessage> cameraMessages;
+    private static int counter;
+
+    public FileGenerator(@Value("${filepath}") String filepath) {
+        this.filepath = filepath;
+        cameraMessages = new ArrayList<>();
+        counter = 0;
+        readFile();
+    }
+
+    private void readFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+            String message = reader.readLine();
+            LocalDateTime localDateTime = LocalDateTime.now();
+            while (message != null) {
+                String[] info = message.split(",");
+                localDateTime = localDateTime.plusNanos(Integer.parseInt(info[2]) * 1000000);
+                cameraMessages.add(new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime, Integer.parseInt(info[2])));
+                message = reader.readLine();
+            }
+            LOGGER.info("File succesvol gelezen van: " + filepath + ".");
+        } catch (IOException e) {
+            LOGGER.error("Fout bij het lezen van file: " + filepath + ".");
+        }
+    }
 
     @Override
     public CameraMessage generate() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
-            List<String> messages = new ArrayList<>();
-            String message;
-            while ((message = reader.readLine()) != null) {
-                messages.add(message);
-            }
-            String[] info = messages.get(5).split(",");
-            return new CameraMessage(Integer.parseInt(info[0]), info[1], LocalDateTime.now());
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (counter < cameraMessages.size()) {
+            counter++;
+            return cameraMessages.get(counter - 1);
         }
+        System.exit(0);
         return null;
     }
 }
