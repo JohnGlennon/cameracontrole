@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class CameraMessage {
+
     private int id;
     private String licensePlate;
     private LocalDateTime timestamp;
