@@ -1,15 +1,24 @@
 package be.kdg.processor.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Camera {
+    @JsonProperty("cameraId")
     private int cameraId;
-    private double latitude;
-    private double longitude;
+    @JsonProperty("location")
+    private Location location;
+    @JsonProperty("segment")
+    private Segment segment;
+    @JsonProperty("euroNorm")
     private int euroNorm;
 
-    public Camera(int cameraId, double latitude, double longitude, int euroNorm) {
+    public Camera() {
+    }
+
+    public Camera(int cameraId, Location location, Segment segment, int euroNorm) {
         this.cameraId = cameraId;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
+        this.segment = segment;
         this.euroNorm = euroNorm;
     }
 
@@ -21,20 +30,20 @@ public class Camera {
         this.cameraId = cameraId;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public Segment getSegment() {
+        return segment;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setSegment(Segment segment) {
+        this.segment = segment;
     }
 
     public int getEuroNorm() {

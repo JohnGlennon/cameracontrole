@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>90</y>
+      <w>150</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>Camera
+--
+cameraId: int
+location: Location
+segment: Segment
+euroNorm: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>90</y>
+      <w>140</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Location
+--
+latitude: double
+longitude: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>120</y>
+      <w>210</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>m1=1
+m2=1
+heeft</panel_attributes>
+    <additional_attributes>10.0;20.0;190.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>710</x>
+      <y>330</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Camerabericht
+--
+cameraId: int
+licensePlate: String
+timestamp: LocalDateTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>180</y>
+      <w>90</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>m1=1
+m2=*
+genereert</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>560</y>
+      <w>190</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>LicensePlate
+--
+plateId: String
+nationalNumber: String
+euroNumber: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>400</x>
+      <y>570</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Boete
+--
+bedrag: double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>730</x>
+      <y>570</y>
+      <w>180</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Overtreding
+--
+licensePlate: LicensePlate
+tijdstip: LocalDateTime</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>400</y>
+      <w>110</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>m1=1..2
+m2=0..2
+kan leiden tot</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;170.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>530</x>
+      <y>750</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Snelheidsovertreding
+--
+maxSnelheid: int
+snelheid: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>800</x>
+      <y>620</y>
+      <w>30</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;160.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>930</x>
+      <y>750</y>
+      <w>160</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>Emissieovertreding
+--
+minEuronorm: int
+euronorm: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>680</x>
+      <y>760</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>550</x>
+      <y>580</y>
+      <w>200</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>m1=1
+m2=1
+vormt</panel_attributes>
+    <additional_attributes>10.0;20.0;180.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>580</y>
+      <w>220</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>m1=*
+m2=1
+bevat</panel_attributes>
+    <additional_attributes>10.0;20.0;200.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1100</x>
+      <y>90</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Segment
+--
+connectedCameraId: int
+distance: int
+speedLimit: int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>880</x>
+      <y>120</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>m1=1
+m2=1
+heeft</panel_attributes>
+    <additional_attributes>10.0;20.0;220.0;20.0</additional_attributes>
+  </element>
+</diagram>

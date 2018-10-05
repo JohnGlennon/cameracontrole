@@ -1,9 +1,17 @@
 package be.kdg.processor.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class LicensePlate {
+    @JsonProperty("plateId")
     private String plateId;
+    @JsonProperty("nationalNumber")
     private String nationalNumber;
+    @JsonProperty("euroNumber")
     private int euroNumber;
+
+    public LicensePlate() {
+    }
 
     public LicensePlate(String plateId, String nationalNumber, int euroNumber) {
         this.plateId = plateId;

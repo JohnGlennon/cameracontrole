@@ -1,15 +1,10 @@
 package be.kdg.processor.receivers;
 
-import be.kdg.processor.deserializers.LicensePlateDeserializer;
-import be.kdg.processor.model.Camera;
-import be.kdg.processor.deserializers.CameraDeserializer;
-import be.kdg.processor.model.LicensePlate;
+import be.kdg.processor.deserializers.JsonDeserializer;
 import be.kdg.sa.services.CameraNotFoundException;
 import be.kdg.sa.services.CameraServiceProxy;
 import be.kdg.sa.services.LicensePlateNotFoundException;
 import be.kdg.sa.services.LicensePlateServiceProxy;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -26,28 +21,14 @@ public class Receiver {
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
     private static String queueName;
 
-    private ObjectMapper cameraMapper;
-    private SimpleModule cameraModule;
-
-    private ObjectMapper licensePlateMapper;
-    private SimpleModule licensePlateModule;
+    private JsonDeserializer jsonDeserializer;
 
     private CameraServiceProxy cameraServiceProxy;
     private LicensePlateServiceProxy licensePlateServiceProxy;
 
     public Receiver() {
         queueName = "cameratopic.queue";
-
-        cameraMapper = new ObjectMapper();
-        cameraModule = new SimpleModule();
-        cameraModule.addDeserializer(Camera.class, new CameraDeserializer());
-        cameraMapper.registerModule(cameraModule);
-
-        licensePlateMapper = new ObjectMapper();
-        licensePlateModule = new SimpleModule();
-        licensePlateModule.addDeserializer(LicensePlate.class, new LicensePlateDeserializer());
-        licensePlateMapper.registerModule(licensePlateModule);
-
+        jsonDeserializer = new JsonDeserializer();
         cameraServiceProxy = new CameraServiceProxy();
         licensePlateServiceProxy = new LicensePlateServiceProxy();
     }
@@ -76,6 +57,8 @@ public class Receiver {
         try {
             String cameraInfo = cameraServiceProxy.get(cameraId);
             String licensePlateInfo = licensePlateServiceProxy.get(plateId);
+            LOGGER.info(jsonDeserializer.toCamera(cameraInfo).getCameraId() + "");
+            LOGGER.info(jsonDeserializer.toLicensePlate(licensePlateInfo).getPlateId());
         } catch (IOException | CameraNotFoundException | LicensePlateNotFoundException e) {
             LOGGER.error(e.getMessage());
         }
