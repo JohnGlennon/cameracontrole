@@ -57,8 +57,11 @@ public class Receiver {
         try {
             String cameraInfo = cameraServiceProxy.get(cameraId);
             String licensePlateInfo = licensePlateServiceProxy.get(plateId);
-            LOGGER.info(jsonDeserializer.toCamera(cameraInfo).getCameraId() + "");
-            LOGGER.info(jsonDeserializer.toLicensePlate(licensePlateInfo).getPlateId());
+            int euroNorm = jsonDeserializer.toCamera(cameraInfo).getEuroNorm();
+            int euroNumber = jsonDeserializer.toLicensePlate(licensePlateInfo).getEuroNumber();
+            if (euroNumber < euroNorm) {
+                LOGGER.info("OVERTREDING! Uw euroNumber is te laag!");
+            }
         } catch (IOException | CameraNotFoundException | LicensePlateNotFoundException e) {
             LOGGER.error(e.getMessage());
         }

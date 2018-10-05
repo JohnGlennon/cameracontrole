@@ -14,12 +14,12 @@ import java.io.IOException;
 @SpringBootTest
 public class ProcessorApplicationTests {
 
-    private CameraServiceProxy cameraServiceProxy = new CameraServiceProxy();
-
     @Test
     public void testCameraService() {
+        CameraServiceProxy cameraServiceProxy = new CameraServiceProxy();
         try {
             String cameraInfo = cameraServiceProxy.get(1);
+            Assert.assertNotNull(cameraInfo);
         } catch (IOException e) {
             e.printStackTrace();
         }
