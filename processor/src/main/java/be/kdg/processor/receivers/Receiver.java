@@ -7,10 +7,6 @@ import be.kdg.sa.services.LicensePlateNotFoundException;
 import be.kdg.sa.services.LicensePlateServiceProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
-import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -19,7 +15,6 @@ import java.io.IOException;
 public class Receiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
-    private static String queueName;
 
     private JsonDeserializer jsonDeserializer;
 
@@ -27,24 +22,9 @@ public class Receiver {
     private LicensePlateServiceProxy licensePlateServiceProxy;
 
     public Receiver() {
-        queueName = "cameratopic.queue";
         jsonDeserializer = new JsonDeserializer();
         cameraServiceProxy = new CameraServiceProxy();
         licensePlateServiceProxy = new LicensePlateServiceProxy();
-    }
-
-    @Bean
-    SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
-
-    @Bean
-    MessageListenerAdapter listenerAdapter(Receiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
     }
 
     public void receiveMessage(String message) {
