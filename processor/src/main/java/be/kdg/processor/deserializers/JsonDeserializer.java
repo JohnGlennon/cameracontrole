@@ -5,9 +5,11 @@ import be.kdg.processor.model.LicensePlate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Component
 public class JsonDeserializer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonDeserializer.class);
