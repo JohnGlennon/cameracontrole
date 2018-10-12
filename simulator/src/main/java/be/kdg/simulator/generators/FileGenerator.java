@@ -53,7 +53,6 @@ public class FileGenerator implements MessageGenerator {
             counter++;
             return cameraMessages.get(counter - 1);
         }
-        System.exit(0);
         return null;
     }
 }

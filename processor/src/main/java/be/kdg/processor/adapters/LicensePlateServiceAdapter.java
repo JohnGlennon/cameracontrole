@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 public class LicensePlateServiceAdapter {
@@ -22,10 +23,10 @@ public class LicensePlateServiceAdapter {
     @Autowired
     private JsonDeserializer jsonDeserializer;
 
-    public LicensePlate toLicensePlate(String plateId) {
+    public Optional<LicensePlate> toLicensePlate(String plateId) {
         try {
             String licensePlateInfo = licensePlateServiceProxy.get(plateId);
-            return jsonDeserializer.toLicensePlate(licensePlateInfo);
+            return Optional.of(jsonDeserializer.toLicensePlate(licensePlateInfo));
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         } catch (LicensePlateNotFoundException e) {
@@ -33,6 +34,6 @@ public class LicensePlateServiceAdapter {
         } catch (InvalidLicensePlateException e) {
             LOGGER.error("Ongeldige license plate: " + plateId);
         }
-        return null;
+        return Optional.empty();
     }
 }

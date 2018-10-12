@@ -7,18 +7,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class XMLConverter {
     private static final Logger LOGGER = LoggerFactory.getLogger(XMLConverter.class);
     private XmlMapper mapper = new XmlMapper();
 
-    public String convertMessageToXML(CameraMessage message) {
-        String xml = null;
+    public Optional<String> convertMessageToXML(CameraMessage message) {
         try {
-            xml = mapper.writeValueAsString(message);
+            String xml = mapper.writeValueAsString(message);
+            return Optional.of(xml);
         } catch (JsonProcessingException e) {
             LOGGER.error("Fout bij het converteren van message naar XML.");
         }
-        return xml;
+        return Optional.empty();
     }
 }

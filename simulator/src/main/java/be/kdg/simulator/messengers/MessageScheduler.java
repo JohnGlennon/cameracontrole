@@ -1,22 +1,25 @@
 package be.kdg.simulator.messengers;
 
-import be.kdg.simulator.generators.MessageGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class MessageScheduler {
 
     private ScheduledExecutorService scheduler;
     private Messenger messenger;
-    private MessageGenerator messageGenerator;
 
-    public MessageScheduler(Messenger messenger, MessageGenerator messageGenerator) {
+    @Value("${frequentie}")
+    private long frequentie;
+
+    public MessageScheduler(Messenger messenger) {
         this.messenger = messenger;
-        this.messageGenerator = messageGenerator;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -26,11 +29,7 @@ public class MessageScheduler {
     }
 
     private void tick() {
-        scheduler.schedule(this::tick, getDelay(), TimeUnit.MILLISECONDS);
+        scheduler.schedule(this::tick, frequentie, TimeUnit.MILLISECONDS);
         messenger.sendMessage();
-    }
-
-    private long getDelay() {
-        return 1000;
     }
 }

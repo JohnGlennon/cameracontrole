@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 public class CameraServiceAdapter {
@@ -21,15 +22,15 @@ private static final Logger LOGGER = LoggerFactory.getLogger(CameraServiceAdapte
     @Autowired
     private CameraServiceProxy cameraServiceProxy;
 
-    public Camera getCamera(int cameraId) {
+    public Optional<Camera> toCamera(int cameraId) {
         try {
             String cameraInfo = cameraServiceProxy.get(cameraId);
-            return jsonDeserializer.toCamera(cameraInfo);
+            return Optional.of(jsonDeserializer.toCamera(cameraInfo));
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         } catch (CameraNotFoundException e) {
             LOGGER.error("Camera niet gevonden: " + cameraId);
         }
-        return null;
+        return Optional.empty();
     }
 }

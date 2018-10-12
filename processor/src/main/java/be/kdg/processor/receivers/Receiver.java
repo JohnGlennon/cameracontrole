@@ -2,31 +2,25 @@ package be.kdg.processor.receivers;
 
 import be.kdg.processor.adapters.CameraServiceAdapter;
 import be.kdg.processor.adapters.LicensePlateServiceAdapter;
-import be.kdg.processor.deserializers.JsonDeserializer;
-import be.kdg.sa.services.CameraNotFoundException;
-import be.kdg.sa.services.CameraServiceProxy;
-import be.kdg.sa.services.LicensePlateNotFoundException;
-import be.kdg.sa.services.LicensePlateServiceProxy;
+import be.kdg.processor.model.Camera;
+import be.kdg.processor.model.LicensePlate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
+import java.util.Optional;
 
 @Component
 public class Receiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
-    private JsonDeserializer jsonDeserializer;
-
     private CameraServiceAdapter cameraServiceAdapter;
     private LicensePlateServiceAdapter licensePlateServiceAdapter;
 
-    public Receiver() {
-        jsonDeserializer = new JsonDeserializer();
-        cameraServiceAdapter = new CameraServiceAdapter();
-        licensePlateServiceAdapter = new LicensePlateServiceAdapter();
+    public Receiver(CameraServiceAdapter cameraServiceAdapter, LicensePlateServiceAdapter licensePlateServiceAdapter) {
+        this.cameraServiceAdapter = cameraServiceAdapter;
+        this.licensePlateServiceAdapter = licensePlateServiceAdapter;
     }
 
     public void receiveMessage(String message) {
@@ -36,18 +30,15 @@ public class Receiver {
         int cameraId = Integer.parseInt(messageInfo[2]);
         String plateId = messageInfo[3];
 
-//        try {
-//            String cameraInfo = cameraServiceProxy.get(cameraId);
-//            String licensePlateInfo = licensePlateServiceProxy.get(plateId);
-//            int euroNorm = jsonDeserializer.toCamera(cameraInfo).getEuroNorm();
-//            int euroNumber = jsonDeserializer.toLicensePlate(licensePlateInfo).getEuroNumber();
-//            if (euroNumber < euroNorm) {
-//                LOGGER.info("OVERTREDING! Uw euroNumber is te laag!");
-//            }
-//        } catch (IOException | CameraNotFoundException | LicensePlateNotFoundException e) {
-//            LOGGER.error(e.getMessage());
-//        }
+        Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraId);
+        Optional<LicensePlate> licensePlate = licensePlateServiceAdapter.toLicensePlate(plateId);
 
-        
+        if (camera.isPresent() && licensePlate.isPresent()) {
+            int euroNorm = camera.get().getEuroNorm();
+            int euroNumber = licensePlate.get().getEuroNumber();
+            if (euroNumber < euroNorm) {
+                LOGGER.info("OVERTREDING! Uw euroNumber is te laag!");
+            }
+        }
     }
 }

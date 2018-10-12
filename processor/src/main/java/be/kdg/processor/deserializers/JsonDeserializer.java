@@ -11,25 +11,13 @@ import java.io.IOException;
 
 @Component
 public class JsonDeserializer {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonDeserializer.class);
     private ObjectMapper mapper = new ObjectMapper();
 
-    public Camera toCamera(String json) {
-        try {
-            return mapper.readValue(json, Camera.class);
-        } catch (IOException e) {
-            LOGGER.error("Fout bij het lezen van Json.");
-        }
-        return null;
+    public Camera toCamera(String json) throws IOException {
+        return mapper.readValue(json, Camera.class);
     }
 
-    public LicensePlate toLicensePlate(String json) {
-        try {
-            return mapper.readValue(json, LicensePlate.class);
-        } catch (IOException e) {
-            LOGGER.error("Fout bij het lezen van Json.");
-        }
-        return null;
+    public LicensePlate toLicensePlate(String json) throws IOException {
+        return mapper.readValue(json, LicensePlate.class);
     }
 }
