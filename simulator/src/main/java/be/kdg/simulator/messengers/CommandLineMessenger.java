@@ -24,6 +24,6 @@ public class CommandLineMessenger implements Messenger {
 
     @Override
     public void sendMessage() {
-        System.out.println(messageGenerator.generate());
+        System.out.println(messageGenerator.generate().get());
     }
 }

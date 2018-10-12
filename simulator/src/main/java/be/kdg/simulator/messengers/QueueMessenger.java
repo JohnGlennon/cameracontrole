@@ -25,7 +25,7 @@ public class QueueMessenger implements Messenger {
     @Override
     public void sendMessage() {
         try {
-            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), messageGenerator.generate().toString());
+            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), messageGenerator.generate().get().toString());
             LOGGER.info("Message succesvol verzonden.");
         } catch (IllegalArgumentException iae) {
             LOGGER.error("Fout bij het zenden van message.");

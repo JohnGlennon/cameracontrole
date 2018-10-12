@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Component
 @ConditionalOnProperty(name = "generator.type", havingValue = "file")
@@ -34,15 +35,15 @@ public class FileGenerator implements MessageGenerator {
     }
 
     @Override
-    public CameraMessage generate() {
+    public Optional<CameraMessage> generate() {
         try {
             String message = reader.readLine();
             String[] info = message.split(",");
             localDateTime = localDateTime.plusNanos(Integer.parseInt(info[2]) * 1000000);
-            return new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime, Integer.parseInt(info[2]));
+            return Optional.of(new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime, Integer.parseInt(info[2])));
         } catch (IOException e) {
             LOGGER.error("Fout bij het lezen van file: " + filepath + ".");
         }
-        return null;
+        return Optional.empty();
     }
 }

@@ -22,7 +22,7 @@ public class SimulatorApplicationTests {
     @Test
     public void testMessageGenerator() {
         String regex = "^(\\d{1})-(\\w{3})-(\\d{3})$";
-        CameraMessage cameraMessage = messageGenerator.generate();
+        CameraMessage cameraMessage = messageGenerator.generate().get();
         Assert.assertTrue(cameraMessage.getLicensePlate().matches(regex));
     }
 
