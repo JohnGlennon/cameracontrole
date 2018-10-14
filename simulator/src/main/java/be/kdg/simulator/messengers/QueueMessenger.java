@@ -3,6 +3,7 @@ package be.kdg.simulator.messengers;
 import be.kdg.simulator.config.MessagingConfig;
 import be.kdg.simulator.converters.XMLConverter;
 import be.kdg.simulator.generators.MessageGenerator;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -28,10 +29,12 @@ public class QueueMessenger implements Messenger {
     @Override
     public void sendMessage() {
         try {
-            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), xmlConverter.convertMessageToXML(messageGenerator.generate().get()).get());
+            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), xmlConverter.convertMessageToXML(messageGenerator.generate().get()));
             LOGGER.info("Message succesvol verzonden.");
         } catch (IllegalArgumentException iae) {
             LOGGER.error("Fout bij het zenden van message.");
+        } catch (JsonProcessingException e) {
+            LOGGER.error("Fout bij het converteren van message naar XML.");
         }
     }
 }

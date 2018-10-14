@@ -15,16 +15,14 @@ import org.springframework.stereotype.Component;
 public class CommandLineMessenger implements Messenger {
 
     private final MessageGenerator messageGenerator;
-    private XMLConverter xmlConverter;
 
     //@AutoWired niet meer nodig door @Component, dit is Constructor Injection
-    public CommandLineMessenger(MessageGenerator messageGenerator, XMLConverter xmlConverter) {
+    public CommandLineMessenger(MessageGenerator messageGenerator) {
         this.messageGenerator = messageGenerator;
-        this.xmlConverter = xmlConverter;
     }
 
     @Override
     public void sendMessage() {
-        System.out.println(xmlConverter.convertMessageToXML(messageGenerator.generate().get()).get());
+        System.out.println(messageGenerator.generate().get());
     }
 }

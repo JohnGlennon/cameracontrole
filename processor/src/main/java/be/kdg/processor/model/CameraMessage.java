@@ -1,7 +1,4 @@
-package be.kdg.simulator.model;
-
-import be.kdg.simulator.converters.DateTimeSerializer;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+package be.kdg.processor.model;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,10 +8,7 @@ public class CameraMessage {
 
     private int id;
     private String licensePlate;
-
-    @JsonSerialize(using = DateTimeSerializer.class)
     private LocalDateTime timestamp;
-
     private long delay;
 
     public CameraMessage() {
