@@ -16,8 +16,7 @@ public class XMLConverter {
 
     public Optional<String> convertMessageToXML(CameraMessage message) {
         try {
-            String xml = mapper.writeValueAsString(message);
-            return Optional.of(xml);
+            return Optional.of(mapper.writeValueAsString(message));
         } catch (JsonProcessingException e) {
             LOGGER.error("Fout bij het converteren van message naar XML.");
         }

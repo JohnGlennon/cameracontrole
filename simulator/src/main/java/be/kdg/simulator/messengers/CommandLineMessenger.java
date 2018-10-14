@@ -1,5 +1,6 @@
 package be.kdg.simulator.messengers;
 
+import be.kdg.simulator.converters.XMLConverter;
 import be.kdg.simulator.generators.MessageGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,17 +14,17 @@ import org.springframework.stereotype.Component;
 //b) @ConditionalOnProperty gebruiken
 public class CommandLineMessenger implements Messenger {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CommandLineMessenger.class);
-
     private final MessageGenerator messageGenerator;
+    private XMLConverter xmlConverter;
 
     //@AutoWired niet meer nodig door @Component, dit is Constructor Injection
-    public CommandLineMessenger(MessageGenerator messageGenerator) {
+    public CommandLineMessenger(MessageGenerator messageGenerator, XMLConverter xmlConverter) {
         this.messageGenerator = messageGenerator;
+        this.xmlConverter = xmlConverter;
     }
 
     @Override
     public void sendMessage() {
-        System.out.println(messageGenerator.generate().get());
+        System.out.println(xmlConverter.convertMessageToXML(messageGenerator.generate().get()).get());
     }
 }
