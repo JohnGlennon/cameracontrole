@@ -31,21 +31,21 @@ public class Receiver {
     public void receiveMessage(String message) {
         LOGGER.info("Message ontvangen: " + message);
 
-//        try {
-//            CameraMessage cameraMessage = xmlConverter.convertXMLToMessage(message);
-//
-//            Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
-//            Optional<LicensePlate> licensePlate = licensePlateServiceAdapter.toLicensePlate(cameraMessage.getLicensePlate());
-//
-//            if (camera.isPresent() && licensePlate.isPresent()) {
-//                int euroNorm = camera.get().getEuroNorm();
-//                int euroNumber = licensePlate.get().getEuroNumber();
-//                if (euroNumber < euroNorm) {
-//                    LOGGER.info("OVERTREDING! Uw euroNumber is te laag!");
-//                }
-//            }
-//        } catch (IOException e) {
-//            LOGGER.error("Fout bij het converteren van XML naar message.");
-//        }
+        try {
+            CameraMessage cameraMessage = xmlConverter.convertXMLToMessage(message);
+
+            Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
+            Optional<LicensePlate> licensePlate = licensePlateServiceAdapter.toLicensePlate(cameraMessage.getLicensePlate());
+
+            if (camera.isPresent() && licensePlate.isPresent()) {
+                int euroNorm = camera.get().getEuroNorm();
+                int euroNumber = licensePlate.get().getEuroNumber();
+                if (euroNumber < euroNorm) {
+                    LOGGER.info("OVERTREDING! Uw euroNumber is te laag!");
+                }
+            }
+        } catch (IOException e) {
+            LOGGER.error("Fout bij het converteren van XML naar message.");
+        }
     }
 }
