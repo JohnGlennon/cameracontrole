@@ -40,7 +40,7 @@ public class FileGenerator implements MessageGenerator {
             String message = reader.readLine();
             String[] info = message.split(",");
             localDateTime = localDateTime.plusNanos(Integer.parseInt(info[2]) * 1000000);
-            return Optional.of(new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime, Integer.parseInt(info[2])));
+            return Optional.of(new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime));
         } catch (IOException e) {
             LOGGER.error("Fout bij het lezen van file: " + filepath + ".");
         }
