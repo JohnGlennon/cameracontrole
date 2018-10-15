@@ -1,12 +1,12 @@
-package be.kdg.simulator.messengers;
+package be.kdg.simulator.schedulers;
 
+import be.kdg.simulator.messengers.Messenger;
 import be.kdg.simulator.model.CameraMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

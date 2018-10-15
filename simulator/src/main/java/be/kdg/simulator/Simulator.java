@@ -1,6 +1,6 @@
 package be.kdg.simulator;
 
-import be.kdg.simulator.messengers.MessageScheduler;
+import be.kdg.simulator.schedulers.MessageScheduler;
 import org.springframework.stereotype.Component;
 
 @Component
