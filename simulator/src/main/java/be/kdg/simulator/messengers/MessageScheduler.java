@@ -1,10 +1,12 @@
 package be.kdg.simulator.messengers;
 
+import be.kdg.simulator.model.CameraMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -29,7 +31,13 @@ public class MessageScheduler {
     }
 
     private void tick() {
-        scheduler.schedule(this::tick, frequentie, TimeUnit.MILLISECONDS);
-        messenger.sendMessage();
+        CameraMessage message = messenger.getMessage();
+        long delay = message.getDelay();
+        if (delay == -1) {
+            scheduler.schedule(this::tick, frequentie, TimeUnit.MILLISECONDS);
+        } else {
+            scheduler.schedule(this::tick, delay, TimeUnit.MILLISECONDS);
+        }
+        messenger.sendMessage(message);
     }
 }

@@ -3,6 +3,7 @@ package be.kdg.simulator.messengers;
 import be.kdg.simulator.config.MessagingConfig;
 import be.kdg.simulator.converters.XMLConverter;
 import be.kdg.simulator.generators.MessageGenerator;
+import be.kdg.simulator.model.CameraMessage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 import org.slf4j.Logger;
@@ -28,9 +29,14 @@ public class QueueMessenger implements Messenger {
     }
 
     @Override
-    public void sendMessage() {
+    public CameraMessage getMessage() {
+        return messageGenerator.generate().get();
+    }
+
+    @Override
+    public void sendMessage(CameraMessage cameraMessage) {
         try {
-            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), xmlConverter.convertMessageToXML(messageGenerator.generate().get()));
+            rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), xmlConverter.convertMessageToXML(cameraMessage));
             LOGGER.info("Message succesvol verzonden.");
         } catch (IllegalArgumentException iae) {
             LOGGER.error("Fout bij het zenden van message.");

@@ -2,6 +2,7 @@ package be.kdg.simulator.messengers;
 
 import be.kdg.simulator.converters.XMLConverter;
 import be.kdg.simulator.generators.MessageGenerator;
+import be.kdg.simulator.model.CameraMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -22,7 +23,12 @@ public class CommandLineMessenger implements Messenger {
     }
 
     @Override
-    public void sendMessage() {
-        System.out.println(messageGenerator.generate().get());
+    public CameraMessage getMessage() {
+        return messageGenerator.generate().get();
+    }
+
+    @Override
+    public void sendMessage(CameraMessage cameraMessage) {
+        System.out.println(cameraMessage);
     }
 }
