@@ -1,7 +1,7 @@
 package be.kdg.processor.receivers;
 
-import be.kdg.processor.deserializers.ObjectConverter;
-import be.kdg.processor.deserializers.XMLConverter;
+import be.kdg.processor.converters.ObjectConverter;
+import be.kdg.processor.converters.XMLConverter;
 import be.kdg.processor.model.CameraMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +23,13 @@ public class Receiver {
     }
 
     public void receiveMessage(String message) {
-        LOGGER.info("Message ontvangen: " + message);
+        LOGGER.info("Message received: " + message);
 
         try {
             CameraMessage cameraMessage = xmlConverter.convertXMLToMessage(message);
             objectConverter.convert(cameraMessage);
         } catch (IOException e) {
-            LOGGER.error("Fout bij het converteren van XML naar message.");
+            LOGGER.error("Error while converting XML to message.");
         }
     }
 }

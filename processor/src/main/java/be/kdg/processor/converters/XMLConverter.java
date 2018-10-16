@@ -1,4 +1,4 @@
-package be.kdg.processor.deserializers;
+package be.kdg.processor.converters;
 
 import be.kdg.processor.model.CameraMessage;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;

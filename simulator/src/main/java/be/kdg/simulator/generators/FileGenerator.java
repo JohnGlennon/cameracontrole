@@ -28,7 +28,7 @@ public class FileGenerator implements MessageGenerator {
         try {
             reader = new BufferedReader(new FileReader(filepath));
         } catch (FileNotFoundException e) {
-            LOGGER.error("File niet gevonden: " + filepath + ".");
+            LOGGER.error("File not found: " + filepath + ".");
         }
         this.filepath = filepath;
         this.localDateTime = LocalDateTime.now();
@@ -42,7 +42,7 @@ public class FileGenerator implements MessageGenerator {
             localDateTime = localDateTime.plusNanos(Integer.parseInt(info[2]) * 1000000);
             return Optional.of(new CameraMessage(Integer.parseInt(info[0]), info[1], localDateTime, Integer.parseInt(info[2])));
         } catch (IOException e) {
-            LOGGER.error("Fout bij het lezen van file: " + filepath + ".");
+            LOGGER.error("Error while reading file: " + filepath + ".");
         }
         return Optional.empty();
     }

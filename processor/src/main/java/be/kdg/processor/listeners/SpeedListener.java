@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class SnelheidsListener implements OvertredingsListener {
+public class SpeedListener implements OffenseListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SnelheidsListener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SpeedListener.class);
 
     @Override
     public void listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {

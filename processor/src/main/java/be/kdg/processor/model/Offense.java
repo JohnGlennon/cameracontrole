@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-public class Overtreding {
+public class Offense {
     @Id
     @GeneratedValue
     private Long id;
@@ -21,7 +21,7 @@ public class Overtreding {
     private LicensePlate licensePlate;
     private LocalDateTime timestamp;
 
-    public Overtreding(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
+    public Offense(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
         this.camera = camera;
         this.licensePlate = licensePlate;
         this.timestamp = timestamp;

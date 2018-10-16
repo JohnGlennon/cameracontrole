@@ -17,8 +17,8 @@ public class MessageScheduler {
     private ScheduledExecutorService scheduler;
     private Messenger messenger;
 
-    @Value("${frequentie}")
-    private long frequentie;
+    @Value("${frequency}")
+    private long frequency;
 
     public MessageScheduler(Messenger messenger) {
         this.messenger = messenger;
@@ -34,7 +34,7 @@ public class MessageScheduler {
         CameraMessage message = messenger.getMessage();
         long delay = message.getDelay();
         if (delay == -1) {
-            scheduler.schedule(this::tick, frequentie, TimeUnit.MILLISECONDS);
+            scheduler.schedule(this::tick, frequency, TimeUnit.MILLISECONDS);
         } else {
             scheduler.schedule(this::tick, delay, TimeUnit.MILLISECONDS);
         }

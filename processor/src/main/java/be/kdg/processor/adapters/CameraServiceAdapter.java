@@ -1,6 +1,6 @@
 package be.kdg.processor.adapters;
 
-import be.kdg.processor.deserializers.JsonDeserializer;
+import be.kdg.processor.converters.JsonDeserializer;
 import be.kdg.processor.model.Camera;
 import be.kdg.sa.services.CameraNotFoundException;
 import be.kdg.sa.services.CameraServiceProxy;
@@ -16,11 +16,13 @@ import java.util.Optional;
 public class CameraServiceAdapter {
 private static final Logger LOGGER = LoggerFactory.getLogger(CameraServiceAdapter.class);
 
-    @Autowired
     private JsonDeserializer jsonDeserializer;
-
-    @Autowired
     private CameraServiceProxy cameraServiceProxy;
+
+    public CameraServiceAdapter(JsonDeserializer jsonDeserializer, CameraServiceProxy cameraServiceProxy) {
+        this.jsonDeserializer = jsonDeserializer;
+        this.cameraServiceProxy = cameraServiceProxy;
+    }
 
     public Optional<Camera> toCamera(int cameraId) {
         try {
@@ -29,7 +31,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(CameraServiceAdapte
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         } catch (CameraNotFoundException e) {
-            LOGGER.error("Camera niet gevonden: " + cameraId);
+            LOGGER.error("Camera not found: " + cameraId);
         }
         return Optional.empty();
     }

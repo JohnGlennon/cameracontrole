@@ -1,8 +1,8 @@
-package be.kdg.processor.deserializers;
+package be.kdg.processor.converters;
 
 import be.kdg.processor.adapters.CameraServiceAdapter;
 import be.kdg.processor.adapters.LicensePlateServiceAdapter;
-import be.kdg.processor.listeners.OvertredingsListener;
+import be.kdg.processor.listeners.OffenseListener;
 import be.kdg.processor.model.Camera;
 import be.kdg.processor.model.CameraMessage;
 import be.kdg.processor.model.LicensePlate;
@@ -16,9 +16,9 @@ public class ObjectConverter {
 
     private CameraServiceAdapter cameraServiceAdapter;
     private LicensePlateServiceAdapter licensePlateServiceAdapter;
-    private List<OvertredingsListener> listeners;
+    private List<OffenseListener> listeners;
 
-    public ObjectConverter(CameraServiceAdapter cameraServiceAdapter, LicensePlateServiceAdapter licensePlateServiceAdapter, List<OvertredingsListener> listeners) {
+    public ObjectConverter(CameraServiceAdapter cameraServiceAdapter, LicensePlateServiceAdapter licensePlateServiceAdapter, List<OffenseListener> listeners) {
         this.cameraServiceAdapter = cameraServiceAdapter;
         this.licensePlateServiceAdapter = licensePlateServiceAdapter;
         this.listeners = listeners;

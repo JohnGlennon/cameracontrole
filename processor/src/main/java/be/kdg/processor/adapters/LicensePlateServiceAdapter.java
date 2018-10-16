@@ -1,6 +1,6 @@
 package be.kdg.processor.adapters;
 
-import be.kdg.processor.deserializers.JsonDeserializer;
+import be.kdg.processor.converters.JsonDeserializer;
 import be.kdg.processor.model.LicensePlate;
 import be.kdg.sa.services.InvalidLicensePlateException;
 import be.kdg.sa.services.LicensePlateNotFoundException;
@@ -17,11 +17,13 @@ import java.util.Optional;
 public class LicensePlateServiceAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicensePlateServiceAdapter.class);
 
-    @Autowired
     private LicensePlateServiceProxy licensePlateServiceProxy;
-
-    @Autowired
     private JsonDeserializer jsonDeserializer;
+
+    public LicensePlateServiceAdapter(LicensePlateServiceProxy licensePlateServiceProxy, JsonDeserializer jsonDeserializer) {
+        this.licensePlateServiceProxy = licensePlateServiceProxy;
+        this.jsonDeserializer = jsonDeserializer;
+    }
 
     public Optional<LicensePlate> toLicensePlate(String plateId) {
         try {
@@ -30,9 +32,9 @@ public class LicensePlateServiceAdapter {
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         } catch (LicensePlateNotFoundException e) {
-            LOGGER.error("License plate niet gevonden: " + plateId);
+            LOGGER.error("License plate not found: " + plateId);
         } catch (InvalidLicensePlateException e) {
-            LOGGER.error("Ongeldige license plate: " + plateId);
+            LOGGER.error("Invalid license plate: " + plateId);
         }
         return Optional.empty();
     }

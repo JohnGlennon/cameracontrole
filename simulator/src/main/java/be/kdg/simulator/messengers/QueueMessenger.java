@@ -37,11 +37,11 @@ public class QueueMessenger implements Messenger {
     public void sendMessage(CameraMessage cameraMessage) {
         try {
             rabbitTemplate.convertAndSend(MessagingConfig.getTopicExchangeName(), MessagingConfig.getQueueName(), xmlConverter.convertMessageToXML(cameraMessage));
-            LOGGER.info("Message succesvol verzonden.");
+            LOGGER.info("Message sent successfully.");
         } catch (IllegalArgumentException iae) {
-            LOGGER.error("Fout bij het zenden van message.");
+            LOGGER.error("Error while sending message.");
         } catch (JsonProcessingException e) {
-            LOGGER.error("Fout bij het converteren van message naar XML.");
+            LOGGER.error("Error while converting message to XML.");
         }
     }
 }
