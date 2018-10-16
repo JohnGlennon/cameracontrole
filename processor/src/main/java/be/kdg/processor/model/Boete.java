@@ -1,7 +1,21 @@
 package be.kdg.processor.model;
 
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Data
+@Entity
 public class Boete {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_overtredingsId")
     private Overtreding overtreding;
+
     private int bedrag;
 
     public Boete(Overtreding overtreding, int bedrag) {
