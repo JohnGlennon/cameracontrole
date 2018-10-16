@@ -28,7 +28,7 @@ public class ObjectConverter {
         Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
         Optional<LicensePlate> licensePlate = licensePlateServiceAdapter.toLicensePlate(cameraMessage.getLicensePlate());
         if (camera.isPresent() && licensePlate.isPresent()) {
-            listeners.forEach(listener -> listener.listen(camera.get(), licensePlate.get()));
+            listeners.forEach(listener -> listener.listen(camera.get(), licensePlate.get(), cameraMessage.getTimestamp()));
         }
     }
 }

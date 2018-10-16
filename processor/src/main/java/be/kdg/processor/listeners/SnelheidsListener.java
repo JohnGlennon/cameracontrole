@@ -6,13 +6,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class SnelheidsListener implements OvertredingsListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SnelheidsListener.class);
 
     @Override
-    public void listen(Camera camera, LicensePlate licensePlate) {
+    public void listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
 
     }
 }
