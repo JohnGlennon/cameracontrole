@@ -26,8 +26,8 @@ public class FineWebController {
     }
 
     @GetMapping("/fine.do")
-    public ModelAndView showFineForm(FineDTO fineDTO) {
-        return new ModelAndView("fineform", "fineDTO", fineDTO);
+    public ModelAndView showFineList(FineDTO fineDTO) {
+        return new ModelAndView("finelist", "fineDTO", fineDTO);
     }
 
     @PostMapping("newfine.do")

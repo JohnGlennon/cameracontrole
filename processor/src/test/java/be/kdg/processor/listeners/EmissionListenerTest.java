@@ -38,10 +38,10 @@ public class EmissionListenerTest {
         Camera camera = new Camera(5);
         LicensePlate licensePlate = new LicensePlate(4);
         int amount = 0;
-        Optional<Fine> optionalFine = fineManager.calculateFine(new EmissionOffense(camera, licensePlate, LocalDateTime.now()));
-        if (optionalFine.isPresent()) {
-            amount = optionalFine.get().getAmount();
-        }
+//        Optional<Fine> optionalFine = fineManager.calculateFine(new EmissionOffense(camera, licensePlate, LocalDateTime.now()));
+//        if (optionalFine.isPresent()) {
+//            amount = optionalFine.get().getAmount();
+//        }
         Assert.assertNotEquals(amount, 0);
     }
 }

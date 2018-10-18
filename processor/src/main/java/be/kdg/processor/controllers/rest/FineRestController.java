@@ -23,7 +23,7 @@ public class FineRestController {
     }
 
     @GetMapping("/fines/{id}")
-    public ResponseEntity<FineDTO> loadFine(@PathVariable Long id) throws FineException {
+    public ResponseEntity<FineDTO> readFine(@PathVariable Long id) throws FineException {
         Fine fine = fineService.load(id);
         return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.OK);
     }
@@ -41,5 +41,12 @@ public class FineRestController {
         fineIn.setAmount(newAmount);
         Fine fineOut = fineService.save(fineIn);
         return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/fines/{id}")
+    public ResponseEntity<FineDTO> deleteFine(@PathVariable Long id) throws FineException {
+        Fine fine = fineService.load(id);
+        fineService.remove(fine);
+        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.GONE);
     }
 }
