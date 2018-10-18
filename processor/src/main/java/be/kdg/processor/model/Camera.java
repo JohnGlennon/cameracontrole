@@ -27,6 +27,10 @@ public class Camera {
     public Camera() {
     }
 
+    public Camera(int euroNorm) {
+        this.euroNorm = euroNorm;
+    }
+
     public Camera(int cameraId, Location location, Segment segment, int euroNorm) {
         this.cameraId = cameraId;
         this.location = location;

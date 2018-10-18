@@ -26,6 +26,10 @@ public class Fine {
         this.amount = amount;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Offense getOffense() {
         return offense;
     }

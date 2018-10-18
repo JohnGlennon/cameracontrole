@@ -14,7 +14,7 @@ public class SpeedListener implements OffenseListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(SpeedListener.class);
 
     @Override
-    public void listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
-
+    public boolean listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
+        return false;
     }
 }

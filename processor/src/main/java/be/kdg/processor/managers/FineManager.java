@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FineManager {
@@ -24,7 +25,7 @@ public class FineManager {
         this.fineService = fineService;
     }
 
-    public void calculateFine(EmissionOffense emissionOffense) {
+    public Optional<Fine> calculateFine(EmissionOffense emissionOffense) {
         boolean inList = false;
         Fine fine = new Fine(emissionOffense, 50);
 
@@ -35,14 +36,17 @@ public class FineManager {
                 long hours = duration.getSeconds() / 3600;
                 if (hours > timeframe) {
                     fineService.save(fine);
+                    return Optional.of(fine);
                 }
             }
         }
 
         if (!inList) {
             fineService.save(fine);
+            return Optional.of(fine);
         }
 
         emissionOffenses.add(emissionOffense);
+        return Optional.empty();
     }
 }

@@ -20,6 +20,10 @@ public class LicensePlate {
     public LicensePlate() {
     }
 
+    public LicensePlate(int euroNumber) {
+        this.euroNumber = euroNumber;
+    }
+
     public LicensePlate(String plateId, String nationalNumber, int euroNumber) {
         this.plateId = plateId;
         this.nationalNumber = nationalNumber;

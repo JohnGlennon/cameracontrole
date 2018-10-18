@@ -6,5 +6,5 @@ import be.kdg.processor.model.LicensePlate;
 import java.time.LocalDateTime;
 
 public interface OffenseListener {
-    void listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp);
+    boolean listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp);
 }

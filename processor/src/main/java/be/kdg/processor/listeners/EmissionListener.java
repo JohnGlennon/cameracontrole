@@ -21,12 +21,14 @@ public class EmissionListener implements OffenseListener {
     }
 
     @Override
-    public void listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
+    public boolean listen(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
         int euroNorm = camera.getEuroNorm();
         int euroNumber = licensePlate.getEuroNumber();
         if (euroNumber < euroNorm) {
             LOGGER.info("Emission Offense! Your euro number is too low!");
             fineManager.calculateFine(new EmissionOffense(camera, licensePlate, timestamp));
+            return true;
         }
+        return false;
     }
 }

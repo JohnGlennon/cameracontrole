@@ -24,4 +24,8 @@ public class FineDTO {
     public int getAmount() {
         return amount;
     }
+
+    public String toString() {
+        return String.valueOf(amount);
+    }
 }
