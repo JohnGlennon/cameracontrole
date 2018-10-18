@@ -18,6 +18,9 @@ public class Fine {
 
     private int amount;
 
+    public Fine() {
+    }
+
     public Fine(Offense offense, int amount) {
         this.offense = offense;
         this.amount = amount;

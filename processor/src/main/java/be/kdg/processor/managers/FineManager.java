@@ -2,6 +2,7 @@ package be.kdg.processor.managers;
 
 import be.kdg.processor.model.EmissionOffense;
 import be.kdg.processor.model.Fine;
+import be.kdg.processor.services.FineService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -13,14 +14,14 @@ import java.util.List;
 public class FineManager {
 
     private List<EmissionOffense> emissionOffenses;
-    private List<Fine> fines;
+    private FineService fineService;
 
     @Value("${timeframe}")
     private int timeframe;
 
-    public FineManager() {
+    public FineManager(FineService fineService) {
         emissionOffenses = new ArrayList<>();
-        fines = new ArrayList<>();
+        this.fineService = fineService;
     }
 
     public void calculateFine(EmissionOffense emissionOffense) {
@@ -33,13 +34,13 @@ public class FineManager {
                 Duration duration = Duration.between(offense.getTimestamp(), emissionOffense.getTimestamp());
                 long hours = duration.getSeconds() / 3600;
                 if (hours > timeframe) {
-                    fines.add(fine);
+                    fineService.save(fine);
                 }
             }
         }
 
         if (!inList) {
-            fines.add(fine);
+            fineService.save(fine);
         }
 
         emissionOffenses.add(emissionOffense);

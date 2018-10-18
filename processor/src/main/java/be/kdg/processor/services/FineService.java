@@ -23,9 +23,9 @@ public class FineService {
     }
 
     public Fine load(Long id) throws FineException {
-        Optional<Fine> optionalBoete = fineRepository.findById(id);
-        if (optionalBoete.isPresent()) {
-            return optionalBoete.get();
+        Optional<Fine> optionalFine = fineRepository.findById(id);
+        if (optionalFine.isPresent()) {
+            return optionalFine.get();
         }
         throw new FineException("Fine not found.");
     }

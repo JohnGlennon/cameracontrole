@@ -1,19 +1,27 @@
 package be.kdg.processor.dto;
 
 import be.kdg.processor.model.Offense;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.validation.constraints.NotEmpty;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class FineDTO {
-    @NotEmpty
-    private Offense offense;
 
-    @NotEmpty
+    private Offense offense;
     private int amount;
+
+    public FineDTO() {
+    }
+
+    public FineDTO(Offense offense, int amount) {
+        this.offense = offense;
+        this.amount = amount;
+    }
+
+    public Offense getOffense() {
+        return offense;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }

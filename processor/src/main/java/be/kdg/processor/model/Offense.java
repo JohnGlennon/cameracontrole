@@ -21,6 +21,9 @@ public class Offense {
     private LicensePlate licensePlate;
     private LocalDateTime timestamp;
 
+    public Offense() {
+    }
+
     public Offense(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
         this.camera = camera;
         this.licensePlate = licensePlate;
