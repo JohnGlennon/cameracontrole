@@ -25,7 +25,7 @@ public class FineManager {
 
     public void calculateFine(EmissionOffense emissionOffense) {
         boolean inList = false;
-        Fine fine = new Fine(emissionOffense, 500);
+        Fine fine = new Fine(emissionOffense, 50);
 
         for (EmissionOffense offense : emissionOffenses) {
             if (offense.getLicensePlate().getPlateId().equals(emissionOffense.getLicensePlate().getPlateId())) {

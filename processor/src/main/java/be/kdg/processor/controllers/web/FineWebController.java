@@ -30,7 +30,7 @@ public class FineWebController {
         return new ModelAndView("fineform", "fineDTO", fineDTO);
     }
 
-    @PostMapping
+    @PostMapping("newfine.do")
     public ModelAndView createFine(@Valid @ModelAttribute FineDTO fineDTO) {
         Fine savedFine = fineService.save(modelMapper.map(fineDTO, Fine.class));
         return new ModelAndView("finesum", "fineDTO", modelMapper.map(savedFine, FineDTO.class));

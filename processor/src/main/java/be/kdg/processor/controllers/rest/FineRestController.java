@@ -35,7 +35,7 @@ public class FineRestController {
     }
 
     @PutMapping("/fines/{id}")
-    public ResponseEntity<FineDTO> updateBoete(@PathVariable Long id, @RequestParam("offense") Offense newOffense, @RequestParam("amount") int newAmount) throws FineException {
+    public ResponseEntity<FineDTO> updateFine(@PathVariable Long id, @RequestParam("offense") Offense newOffense, @RequestParam("amount") int newAmount) throws FineException {
         Fine fineIn = fineService.load(id);
         fineIn.setOffense(newOffense);
         fineIn.setAmount(newAmount);
