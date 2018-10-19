@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>factors</title>
 </head>
 <body>
-
+<p>
+    <h5>EmissionFactor: </h5>
+    <input th:value="${ffDTO.emissionFactor}">
+</p>
+<p>
+<h5>SpeedFactor: </h5>
+    <input th:value="${ffDTO.speedFactor}">
+</p>
 </body>
 </html>

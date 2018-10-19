@@ -22,7 +22,7 @@ public class FineWebController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/offensefactors.do")
+    @GetMapping("/finefactors.do")
     public ModelAndView showOffenseFactors() {
         return new ModelAndView("factors", "ffDTO", new FineFactorDTO(fineService.getEmissionfactor(), fineService.getSpeedfactor()));
     }

@@ -21,9 +21,9 @@ public class FineRestController {
     }
 
     @GetMapping("/fines/{id}")
-    public ResponseEntity<FineDTO> readFine(@PathVariable Long id) throws FineException {
+    public FineDTO readFine(@PathVariable Long id) throws FineException {
         Fine fine = fineService.load(id);
-        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.OK);
+        return modelMapper.map(fine, FineDTO.class);
     }
 
     @GetMapping("/fines")
