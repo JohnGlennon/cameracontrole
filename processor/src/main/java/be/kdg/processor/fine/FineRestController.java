@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class FineRestController {
@@ -24,13 +26,19 @@ public class FineRestController {
         return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.OK);
     }
 
-    @PostMapping("/fines")
+    @GetMapping("/fines")
+    public FineDTO[] readFines() {
+        List<Fine> fines = fineService.getFines();
+        return modelMapper.map(fines, FineDTO[].class);
+    }
+
+    @PostMapping("/fines/create")
     public ResponseEntity<FineDTO> createFine(@RequestBody FineDTO fineDTO) {
         Fine fine = fineService.save(modelMapper.map(fineDTO, Fine.class));
         return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.CREATED);
     }
 
-    @PutMapping("/fines/{id}")
+    @PutMapping("/fines/update/{id}")
     public ResponseEntity<FineDTO> updateFine(@PathVariable Long id, @RequestParam("offense") Offense newOffense, @RequestParam("amount") int newAmount) throws FineException {
         Fine fineIn = fineService.load(id);
         fineIn.setOffense(newOffense);
@@ -39,7 +47,7 @@ public class FineRestController {
         return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/fines/{id}")
+    @DeleteMapping("/fines/delete/{id}")
     public ResponseEntity<FineDTO> deleteFine(@PathVariable Long id) throws FineException {
         Fine fine = fineService.load(id);
         fineService.remove(fine);

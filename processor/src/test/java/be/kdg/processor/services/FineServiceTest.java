@@ -23,6 +23,6 @@ public class FineServiceTest {
         Fine fine = new Fine(new Offense(), 50);
         fineService.save(fine);
         Fine loadedFine = fineService.load(fine.getId());
-        Assert.assertEquals(fine, loadedFine);
+        Assert.assertEquals(fine.getId(), loadedFine.getId());
     }
 }

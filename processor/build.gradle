@@ -51,4 +51,5 @@ dependencies {
     compile('org.webjars:webjars-locator-core:0.35')
     compile('org.webjars:bootstrap:4.1.3')
     compile('org.webjars:jquery:3.0.0')
+    compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
 }

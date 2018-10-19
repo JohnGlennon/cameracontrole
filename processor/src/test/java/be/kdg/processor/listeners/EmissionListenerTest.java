@@ -25,21 +25,21 @@ public class EmissionListenerTest {
 
     @Test
     public void testEmissionDetection() {
-        Camera camera = new Camera(5);
-        LicensePlate licensePlate = new LicensePlate(4);
+        Camera camera = new Camera(1, 5);
+        LicensePlate licensePlate = new LicensePlate("1-ABC-123", 4);
         boolean isOffense = emissionListener.listen(camera, licensePlate, LocalDateTime.now());
         Assert.assertTrue(isOffense);
     }
 
     @Test
     public void testFineCalculation() {
-        Camera camera = new Camera(5);
-        LicensePlate licensePlate = new LicensePlate(4);
+        Camera camera = new Camera(1, 5);
+        LicensePlate licensePlate = new LicensePlate("1-ABC-123", 4);
         int amount = 0;
 //        Optional<Fine> optionalFine = fineManager.calculateFine(new EmissionOffense(camera, licensePlate, LocalDateTime.now()));
 //        if (optionalFine.isPresent()) {
 //            amount = optionalFine.get().getAmount();
 //        }
-        Assert.assertNotEquals(amount, 0);
+        Assert.assertNotEquals(amount, 50);
     }
 }

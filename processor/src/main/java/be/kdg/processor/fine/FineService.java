@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -55,5 +56,9 @@ public class FineService {
 
     public void setSpeedfactor(int speedfactor) {
         this.speedfactor = speedfactor;
+    }
+
+    public List<Fine> getFines() {
+        return fineRepository.findAll();
     }
 }

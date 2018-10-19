@@ -20,7 +20,8 @@ public class LicensePlate {
     public LicensePlate() {
     }
 
-    public LicensePlate(int euroNumber) {
+    public LicensePlate(String plateId, int euroNumber) {
+        this.plateId = plateId;
         this.euroNumber = euroNumber;
     }
 

@@ -27,7 +27,8 @@ public class Camera {
     public Camera() {
     }
 
-    public Camera(int euroNorm) {
+    public Camera(int cameraId, int euroNorm) {
+        this.cameraId = cameraId;
         this.euroNorm = euroNorm;
     }
 
