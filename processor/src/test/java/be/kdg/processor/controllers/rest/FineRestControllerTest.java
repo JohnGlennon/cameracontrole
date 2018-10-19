@@ -1,7 +1,7 @@
 package be.kdg.processor.controllers.rest;
 
-import be.kdg.processor.dto.FineDTO;
-import be.kdg.processor.model.Offense;
+import be.kdg.processor.fine.FineDTO;
+import be.kdg.processor.offense.Offense;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,8 +1,9 @@
 package be.kdg.processor.services;
 
-import be.kdg.processor.exceptions.FineException;
-import be.kdg.processor.model.Fine;
-import be.kdg.processor.model.Offense;
+import be.kdg.processor.fine.FineException;
+import be.kdg.processor.fine.Fine;
+import be.kdg.processor.fine.FineService;
+import be.kdg.processor.offense.Offense;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,10 +1,9 @@
 package be.kdg.processor.listeners;
 
-import be.kdg.processor.managers.FineManager;
-import be.kdg.processor.model.Camera;
-import be.kdg.processor.model.EmissionOffense;
-import be.kdg.processor.model.Fine;
-import be.kdg.processor.model.LicensePlate;
+import be.kdg.processor.fine.FineManager;
+import be.kdg.processor.camera.Camera;
+import be.kdg.processor.licenseplate.LicensePlate;
+import be.kdg.processor.offense.EmissionListener;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
