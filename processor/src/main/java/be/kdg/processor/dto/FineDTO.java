@@ -17,6 +17,14 @@ public class FineDTO {
         this.amount = amount;
     }
 
+    public void setOffense(Offense offense) {
+        this.offense = offense;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public Offense getOffense() {
         return offense;
     }
