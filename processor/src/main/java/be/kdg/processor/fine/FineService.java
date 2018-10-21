@@ -1,9 +1,5 @@
 package be.kdg.processor.fine;
 
-import be.kdg.processor.fine.FineException;
-import be.kdg.processor.fine.Fine;
-import be.kdg.processor.fine.FineRepository;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,11 +10,8 @@ import java.util.Optional;
 @Transactional
 public class FineService {
 
-    @Value("${emissionfactor}")
-    private int emissionfactor;
-
-    @Value("${speedfactor}")
-    private int speedfactor;
+    private int emissionfactor = 50;
+    private int speedfactor = 50;
 
     private final FineRepository fineRepository;
 
@@ -46,12 +39,12 @@ public class FineService {
         return emissionfactor;
     }
 
-    public void setEmissionfactor(int emissionfactor) {
-        this.emissionfactor = emissionfactor;
-    }
-
     public int getSpeedfactor() {
         return speedfactor;
+    }
+
+    public void setEmissionfactor(int emissionfactor) {
+        this.emissionfactor = emissionfactor;
     }
 
     public void setSpeedfactor(int speedfactor) {

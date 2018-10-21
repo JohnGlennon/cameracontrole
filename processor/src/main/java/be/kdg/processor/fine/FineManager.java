@@ -17,12 +17,6 @@ public class FineManager {
     @Value("${timeframe}")
     private int timeframe;
 
-    @Value("${emissionfactor}")
-    private int emissionfactor;
-
-    @Value("${speedfactor}")
-    private int speedfactor;
-
     public FineManager(FineService fineService) {
         emissionOffenses = new ArrayList<>();
         this.fineService = fineService;
@@ -30,7 +24,7 @@ public class FineManager {
 
     public void calculateFine(EmissionOffense emissionOffense) {
         boolean inList = false;
-        Fine fine = new Fine(emissionOffense, emissionfactor);
+        Fine fine = new Fine(emissionOffense, fineService.getEmissionfactor());
 
         for (EmissionOffense offense : emissionOffenses) {
             if (offense.getLicensePlate().getPlateId().equals(emissionOffense.getLicensePlate().getPlateId())) {
