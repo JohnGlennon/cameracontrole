@@ -8,6 +8,7 @@ public class FineDTO {
 
     private Offense offense;
     private int amount;
+    private boolean approved;
 
     public FineDTO() {
     }
@@ -15,6 +16,12 @@ public class FineDTO {
     public FineDTO(Offense offense, int amount) {
         this.offense = offense;
         this.amount = amount;
+    }
+
+    public FineDTO(Offense offense, int amount, boolean approved) {
+        this.offense = offense;
+        this.amount = amount;
+        this.approved = approved;
     }
 
     public void setOffense(Offense offense) {
@@ -31,6 +38,14 @@ public class FineDTO {
 
     public int getAmount() {
         return amount;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 
     public String toString() {

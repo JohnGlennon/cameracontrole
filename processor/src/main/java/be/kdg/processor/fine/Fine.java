@@ -19,12 +19,20 @@ public class Fine {
 
     private int amount;
 
+    private boolean approved;
+
     public Fine() {
     }
 
     public Fine(Offense offense, int amount) {
         this.offense = offense;
         this.amount = amount;
+    }
+
+    public Fine(Offense offense, int amount, boolean approved) {
+        this.offense = offense;
+        this.amount = amount;
+        this.approved = approved;
     }
 
     public Long getId() {
@@ -45,5 +53,17 @@ public class Fine {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

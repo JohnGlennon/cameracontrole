@@ -11,8 +11,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
 @RestController
 @RequestMapping("/api")
 public class FineRestController {
@@ -53,10 +51,12 @@ public class FineRestController {
         return modelMapper.map(filteredFines, FineDTO[].class);
     }
 
-    @PostMapping("/fines/create")
-    public ResponseEntity<FineDTO> createFine(@RequestBody FineDTO fineDTO) {
-        Fine fine = fineService.save(modelMapper.map(fineDTO, Fine.class));
-        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.CREATED);
+    @GetMapping("/fines/approve/{id}/{approved}")
+    public ResponseEntity<FineDTO> approveFine(@PathVariable Long id, @PathVariable boolean approved) throws FineException {
+        Fine fineIn = fineService.load(id);
+        fineIn.setApproved(approved);
+        Fine fineOut = fineService.save(fineIn);
+        return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
     }
 
     @PutMapping("/fines/update/{id}")
@@ -68,10 +68,18 @@ public class FineRestController {
         return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("/fines/delete/{id}")
-    public ResponseEntity<FineDTO> deleteFine(@PathVariable Long id) throws FineException {
-        Fine fine = fineService.load(id);
-        fineService.remove(fine);
-        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.GONE);
-    }
+
+
+//    @PostMapping("/fines/create")
+//    public ResponseEntity<FineDTO> createFine(@RequestBody FineDTO fineDTO) {
+//        Fine fine = fineService.save(modelMapper.map(fineDTO, Fine.class));
+//        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.CREATED);
+//    }
+
+//    @DeleteMapping("/fines/delete/{id}")
+//    public ResponseEntity<FineDTO> deleteFine(@PathVariable Long id) throws FineException {
+//        Fine fine = fineService.load(id);
+//        fineService.remove(fine);
+//        return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.GONE);
+//    }
 }
