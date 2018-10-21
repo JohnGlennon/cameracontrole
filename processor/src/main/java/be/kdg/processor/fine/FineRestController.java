@@ -6,7 +6,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
 @RestController
 @RequestMapping("/api")
@@ -14,10 +19,12 @@ public class FineRestController {
 
     private final FineService fineService;
     private final ModelMapper modelMapper;
+    private final DateTimeFormatter formatter;
 
     public FineRestController(FineService fineService, ModelMapper modelMapper) {
         this.fineService = fineService;
         this.modelMapper = modelMapper;
+        formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
     }
 
     @GetMapping("/fines/{id}")
@@ -30,6 +37,20 @@ public class FineRestController {
     public FineDTO[] readFines() {
         List<Fine> fines = fineService.getFines();
         return modelMapper.map(fines, FineDTO[].class);
+    }
+
+    @GetMapping("/fines/between/{from}/{till}")
+    public FineDTO[] readFinesInInterval(@PathVariable String from, @PathVariable String till) {
+        LocalDateTime dFrom = LocalDateTime.parse(from, formatter);
+        LocalDateTime dTill = LocalDateTime.parse(till, formatter);
+        List<Fine> fines = fineService.getFines();
+        List<Fine> filteredFines = new ArrayList<>();
+        for (Fine fine : fines) {
+            if (fine.getOffense().getTimestamp().isAfter(dFrom) && fine.getOffense().getTimestamp().isBefore(dTill)) {
+                filteredFines.add(fine);
+            }
+        }
+        return modelMapper.map(filteredFines, FineDTO[].class);
     }
 
     @PostMapping("/fines/create")
