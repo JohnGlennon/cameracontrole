@@ -1,10 +1,12 @@
 package be.kdg.processor.fine;
 
-import be.kdg.processor.offense.Offense;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -59,16 +61,23 @@ public class FineRestController {
         return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
     }
 
-    @PutMapping("/fines/update/{id}")
-    public ResponseEntity<FineDTO> updateFine(@PathVariable Long id, @RequestParam("offense") Offense newOffense, @RequestParam("amount") int newAmount) throws FineException {
+    @GetMapping("/fines/update/{id}/{amount}/{motivation}")
+    public ResponseEntity<FineDTO> updateAmount(@PathVariable Long id, @PathVariable int amount, @PathVariable String motivation) throws FineException {
         Fine fineIn = fineService.load(id);
-        fineIn.setOffense(newOffense);
-        fineIn.setAmount(newAmount);
+        fineIn.setAmount(amount);
+        fineIn.setMotivation(motivation);
         Fine fineOut = fineService.save(fineIn);
         return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
     }
 
-
+//    @PutMapping("/fines/update/{id}")
+//    public ResponseEntity<FineDTO> updateFine(@PathVariable Long id, @RequestParam("offense") Offense newOffense, @RequestParam("amount") int newAmount) throws FineException {
+//        Fine fineIn = fineService.load(id);
+//        fineIn.setOffense(newOffense);
+//        fineIn.setAmount(newAmount);
+//        Fine fineOut = fineService.save(fineIn);
+//        return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
+//    }
 
 //    @PostMapping("/fines/create")
 //    public ResponseEntity<FineDTO> createFine(@RequestBody FineDTO fineDTO) {

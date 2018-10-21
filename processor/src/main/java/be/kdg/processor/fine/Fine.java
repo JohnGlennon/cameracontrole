@@ -18,8 +18,8 @@ public class Fine {
     private Offense offense;
 
     private int amount;
-
     private boolean approved;
+    private String motivation;
 
     public Fine() {
     }
@@ -27,12 +27,6 @@ public class Fine {
     public Fine(Offense offense, int amount) {
         this.offense = offense;
         this.amount = amount;
-    }
-
-    public Fine(Offense offense, int amount, boolean approved) {
-        this.offense = offense;
-        this.amount = amount;
-        this.approved = approved;
     }
 
     public Long getId() {
@@ -65,5 +59,13 @@ public class Fine {
 
     public void setApproved(boolean approved) {
         this.approved = approved;
+    }
+
+    public String getMotivation() {
+        return motivation;
+    }
+
+    public void setMotivation(String motivation) {
+        this.motivation = motivation;
     }
 }
