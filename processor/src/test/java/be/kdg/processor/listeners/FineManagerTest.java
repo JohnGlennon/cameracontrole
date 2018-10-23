@@ -4,7 +4,6 @@ import be.kdg.processor.fine.FineManager;
 import be.kdg.processor.camera.Camera;
 import be.kdg.processor.fine.FineService;
 import be.kdg.processor.licenseplate.Car;
-import be.kdg.processor.offense.EmissionOffense;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
