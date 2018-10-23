@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -19,12 +20,14 @@ public class FineRestController {
 
     private final FineService fineService;
     private final ModelMapper modelMapper;
-    private final DateTimeFormatter formatter;
+    private final LocalDateTimeConverter converter;
+    private final FineFilter fineFilter;
 
-    public FineRestController(FineService fineService, ModelMapper modelMapper) {
+    public FineRestController(FineService fineService, ModelMapper modelMapper, LocalDateTimeConverter converter, FineFilter fineFilter) {
         this.fineService = fineService;
         this.modelMapper = modelMapper;
-        formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        this.converter = converter;
+        this.fineFilter = fineFilter;
     }
 
     @GetMapping("/fines/{id}")
@@ -41,15 +44,10 @@ public class FineRestController {
 
     @GetMapping("/fines/between/{from}/{till}")
     public FineDTO[] readFinesInInterval(@PathVariable String from, @PathVariable String till) {
-        LocalDateTime dFrom = LocalDateTime.parse(from, formatter);
-        LocalDateTime dTill = LocalDateTime.parse(till, formatter);
+        LocalDateTime dFrom = converter.convertStringToLocalDateTime(from);
+        LocalDateTime dTill = converter.convertStringToLocalDateTime(till);
         List<Fine> fines = fineService.getFines();
-        List<Fine> filteredFines = new ArrayList<>();
-        for (Fine fine : fines) {
-            if (fine.getOffense().getTimestamp().isAfter(dFrom) && fine.getOffense().getTimestamp().isBefore(dTill)) {
-                filteredFines.add(fine);
-            }
-        }
+        List<Fine> filteredFines = fineFilter.filterFineList(fines, dFrom, dTill);
         return modelMapper.map(filteredFines, FineDTO[].class);
     }
 
