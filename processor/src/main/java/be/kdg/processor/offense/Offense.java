@@ -1,10 +1,11 @@
 package be.kdg.processor.offense;
 
-import be.kdg.processor.camera.Camera;
-import be.kdg.processor.licenseplate.LicensePlate;
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Data
@@ -14,37 +15,26 @@ public class Offense {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_cameraId")
-    private Camera camera;
+    @Column
+    private String licensePlate;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_plateId")
-    private LicensePlate licensePlate;
+    @Column
     private LocalDateTime timestamp;
 
     public Offense() {
     }
 
-    public Offense(Camera camera, LicensePlate licensePlate, LocalDateTime timestamp) {
-        this.camera = camera;
+
+    public Offense(String licensePlate, LocalDateTime timestamp) {
         this.licensePlate = licensePlate;
         this.timestamp = timestamp;
     }
 
-    public Camera getCamera() {
-        return camera;
-    }
-
-    public void setCamera(Camera camera) {
-        this.camera = camera;
-    }
-
-    public LicensePlate getLicensePlate() {
+    public String getLicensePlate() {
         return licensePlate;
     }
 
-    public void setLicensePlate(LicensePlate licensePlate) {
+    public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
 

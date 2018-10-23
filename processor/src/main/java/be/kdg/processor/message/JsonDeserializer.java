@@ -1,7 +1,7 @@
 package be.kdg.processor.message;
 
 import be.kdg.processor.camera.Camera;
-import be.kdg.processor.licenseplate.LicensePlate;
+import be.kdg.processor.licenseplate.Car;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class JsonDeserializer {
         return mapper.readValue(json, Camera.class);
     }
 
-    public LicensePlate toLicensePlate(String json) throws IOException {
-        return mapper.readValue(json, LicensePlate.class);
+    public Car toCar(String json) throws IOException {
+        return mapper.readValue(json, Car.class);
     }
 }

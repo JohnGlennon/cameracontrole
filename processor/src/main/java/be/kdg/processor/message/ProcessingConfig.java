@@ -1,6 +1,5 @@
 package be.kdg.processor.message;
 
-import be.kdg.processor.message.Receiver;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;

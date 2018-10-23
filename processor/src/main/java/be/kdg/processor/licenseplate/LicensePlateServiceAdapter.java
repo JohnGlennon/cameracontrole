@@ -23,10 +23,10 @@ public class LicensePlateServiceAdapter {
         this.jsonDeserializer = jsonDeserializer;
     }
 
-    public Optional<LicensePlate> toLicensePlate(String plateId) {
+    public Optional<Car> toCar(String plateId) {
         try {
-            String licensePlateInfo = licensePlateServiceProxy.get(plateId);
-            return Optional.of(jsonDeserializer.toLicensePlate(licensePlateInfo));
+            String carInfo = licensePlateServiceProxy.get(plateId);
+            return Optional.of(jsonDeserializer.toCar(carInfo));
         } catch (IOException e) {
             LOGGER.error(e.getMessage());
         } catch (LicensePlateNotFoundException e) {

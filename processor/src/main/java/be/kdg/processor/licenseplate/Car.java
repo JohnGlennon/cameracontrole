@@ -1,31 +1,26 @@
 package be.kdg.processor.licenseplate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Data
-@Entity
-public class LicensePlate {
-    @Id
+public class Car {
     @JsonProperty("plateId")
     private String plateId;
+
     @JsonProperty("nationalNumber")
     private String nationalNumber;
+
     @JsonProperty("euroNumber")
     private int euroNumber;
 
-    public LicensePlate() {
+    public Car() {
     }
 
-    public LicensePlate(String plateId, int euroNumber) {
+    public Car(String plateId, int euroNumber) {
         this.plateId = plateId;
         this.euroNumber = euroNumber;
     }
 
-    public LicensePlate(String plateId, String nationalNumber, int euroNumber) {
+    public Car(String plateId, String nationalNumber, int euroNumber) {
         this.plateId = plateId;
         this.nationalNumber = nationalNumber;
         this.euroNumber = euroNumber;

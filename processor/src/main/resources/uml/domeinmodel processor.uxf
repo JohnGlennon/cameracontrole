@@ -55,7 +55,7 @@ heeft</panel_attributes>
     <panel_attributes>Camerabericht
 --
 cameraId: int
-licensePlate: String
+car: String
 timestamp: LocalDateTime</panel_attributes>
     <additional_attributes/>
   </element>
@@ -110,7 +110,7 @@ bedrag: double</panel_attributes>
     </coordinates>
     <panel_attributes>Overtreding
 --
-licensePlate: LicensePlate
+car: LicensePlate
 tijdstip: LocalDateTime</panel_attributes>
     <additional_attributes/>
   </element>

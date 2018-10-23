@@ -31,10 +31,6 @@ public class FineService {
         throw new FineException("Fine not found.");
     }
 
-    public void remove(Fine fine) {
-        fineRepository.delete(fine);
-    }
-
     public int getEmissionfactor() {
         return emissionfactor;
     }

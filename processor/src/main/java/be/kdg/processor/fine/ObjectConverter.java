@@ -1,11 +1,11 @@
 package be.kdg.processor.fine;
 
 import be.kdg.processor.camera.CameraServiceAdapter;
+import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.licenseplate.LicensePlateServiceAdapter;
 import be.kdg.processor.offense.OffenseListener;
 import be.kdg.processor.camera.Camera;
 import be.kdg.processor.message.CameraMessage;
-import be.kdg.processor.licenseplate.LicensePlate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -26,9 +26,9 @@ public class ObjectConverter {
 
     public void convert(CameraMessage cameraMessage) {
         Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
-        Optional<LicensePlate> licensePlate = licensePlateServiceAdapter.toLicensePlate(cameraMessage.getLicensePlate());
-        if (camera.isPresent() && licensePlate.isPresent()) {
-            listeners.forEach(listener -> listener.listen(camera.get(), licensePlate.get(), cameraMessage.getTimestamp()));
+        Optional<Car> car = licensePlateServiceAdapter.toCar(cameraMessage.getLicensePlate());
+        if (camera.isPresent() && car.isPresent()) {
+            listeners.forEach(listener -> listener.listen(camera.get(), car.get(), cameraMessage.getTimestamp()));
         }
     }
 }

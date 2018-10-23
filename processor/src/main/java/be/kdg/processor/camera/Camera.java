@@ -1,26 +1,17 @@
 package be.kdg.processor.camera;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
-import javax.persistence.*;
-
-@Data
-@Entity
 public class Camera {
-    @Id
     @JsonProperty("cameraId")
     private int cameraId;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_locationId")
     @JsonProperty("location")
     private Location location;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_segmentCameraId")
     @JsonProperty("segment")
     private Segment segment;
+
     @JsonProperty("euroNorm")
     private int euroNorm;
 

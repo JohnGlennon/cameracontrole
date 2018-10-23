@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Data
 @Entity
 public class Fine {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -17,8 +16,13 @@ public class Fine {
     @JoinColumn(name = "fk_offenseId")
     private Offense offense;
 
+    @Column
     private int amount;
+
+    @Column
     private boolean approved;
+
+    @Column
     private String motivation;
 
     public Fine() {

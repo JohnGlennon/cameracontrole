@@ -1,21 +1,11 @@
 package be.kdg.processor.camera;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Data
-@Entity
 public class Location {
-    @Id
-    @GeneratedValue
-    private Long id;
-
     @JsonProperty("lat")
     private double latitude;
+
     @JsonProperty("long")
     private double longitude;
 

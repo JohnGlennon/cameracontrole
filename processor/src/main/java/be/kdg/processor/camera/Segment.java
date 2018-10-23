@@ -4,16 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Data
-@Entity
 public class Segment {
-    @Id
     @JsonProperty("connectedCameraId")
     private int connectedCameraId;
+
     @JsonProperty("distance")
     private int distance;
+
     @JsonProperty("speedLimit")
     private int speedLimit;
 
