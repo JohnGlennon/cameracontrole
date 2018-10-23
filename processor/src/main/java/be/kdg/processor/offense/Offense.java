@@ -21,13 +21,17 @@ public class Offense {
     @Column
     private LocalDateTime timestamp;
 
+    @Column
+    private OffenseType offenseType;
+
     public Offense() {
     }
 
 
-    public Offense(String licensePlate, LocalDateTime timestamp) {
+    public Offense(String licensePlate, LocalDateTime timestamp, OffenseType offenseType) {
         this.licensePlate = licensePlate;
         this.timestamp = timestamp;
+        this.offenseType = offenseType;
     }
 
     public String getLicensePlate() {
@@ -44,5 +48,13 @@ public class Offense {
 
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public OffenseType getOffenseType() {
+        return offenseType;
+    }
+
+    public void setOffenseType(OffenseType offenseType) {
+        this.offenseType = offenseType;
     }
 }

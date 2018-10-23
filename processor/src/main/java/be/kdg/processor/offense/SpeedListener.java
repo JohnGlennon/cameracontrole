@@ -18,6 +18,6 @@ public class SpeedListener implements OffenseListener {
 
     @Override
     public void listen(Camera camera, Car car, LocalDateTime timestamp) {
-//        fineManager.calculateSpeedFine(camera, car, timestamp);
+        fineManager.calculateSpeedFine(camera, car, timestamp);
     }
 }

@@ -3,6 +3,7 @@ package be.kdg.processor.fine;
 import be.kdg.processor.camera.Camera;
 import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.offense.Offense;
+import be.kdg.processor.offense.OffenseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +36,7 @@ public class FineManager {
     }
 
     public int calculateEmissionFine(Camera camera, Car car, LocalDateTime timestamp) {
-        Offense newEmissionOffense = new Offense(car.getPlateId(), timestamp);
+        Offense newEmissionOffense = new Offense(car.getPlateId(), timestamp, OffenseType.EMISSION);
         int fineAmount = 0;
         int euroNorm = camera.getEuroNorm();
         int euroNumber = car.getEuroNumber();
@@ -69,7 +70,7 @@ public class FineManager {
 
     public void calculateSpeedFine(Camera camera, Car car, LocalDateTime timestamp) {
         if (camera.getSegment() != null) {
-            Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp);
+            Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp, OffenseType.SPEED);
             int distance = camera.getSegment().getDistance();
             double time = 0;
             double speed;
