@@ -72,10 +72,9 @@ public class FineManager {
         if (camera.getSegment() != null) {
             Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp, OffenseType.SPEED);
             int distance = camera.getSegment().getDistance();
-            double time = 0;
-            double speed;
             int speedLimit = camera.getSegment().getSpeedLimit();
-            Fine fine = new Fine(newSpeedOffense, fineService.getSpeedfactor());
+            double time = 1000;
+            double speed;
 
             for (Offense oldSpeedOffense : speedOffenses) {
                 if (oldSpeedOffense.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
@@ -91,12 +90,19 @@ public class FineManager {
             }
 
             speed = distance / time;
+            System.out.println(distance);
+            System.out.println(time);
+            System.out.println(speed);
+            System.out.println(speedLimit);
+
+            Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
 
             if (speed > speedLimit) {
                 LOGGER.info("Speed Offense! You were driving too fast!");
-                speedOffenses.add(newSpeedOffense);
                 fineService.save(fine);
             }
+
+            speedOffenses.add(newSpeedOffense);
         }
     }
 }

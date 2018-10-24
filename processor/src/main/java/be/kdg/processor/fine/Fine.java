@@ -17,7 +17,7 @@ public class Fine {
     private Offense offense;
 
     @Column
-    private int amount;
+    private double amount;
 
     @Column
     private boolean approved;
@@ -28,7 +28,7 @@ public class Fine {
     public Fine() {
     }
 
-    public Fine(Offense offense, int amount) {
+    public Fine(Offense offense, double amount) {
         this.offense = offense;
         this.amount = amount;
     }
@@ -45,11 +45,11 @@ public class Fine {
         this.offense = offense;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
