@@ -2,6 +2,7 @@ package be.kdg.processor.controllers.rest;
 
 import be.kdg.processor.fine.FineDTO;
 import be.kdg.processor.offense.Offense;
+import be.kdg.processor.offense.OffenseType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,11 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDateTime;
+
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -31,14 +33,15 @@ public class FineRestControllerTest {
 
     @Test
     public void testCreateFine() throws Exception {
-        FineDTO fineDTO = new FineDTO(new Offense(), 50);
+        Offense offense = new Offense("1-ABC-123", LocalDateTime.now(), OffenseType.EMISSION);
+
+        FineDTO fineDTO = new FineDTO(offense, 50);
         String requestJson = objectMapper.writeValueAsString(fineDTO);
 
-        mockMvc.perform(post("/api/fines")
+        mockMvc.perform(get(String.format("/api/fines/between/%s/%s", LocalDateTime.now().minusMinutes(5), LocalDateTime.now().plusMinutes(5)))
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isCreated())
                 .andDo(print())
-                .andExpect(content().string(containsString("50")));
+                .andExpect(content().string(containsString("1-ABC-123")));
     }
 }

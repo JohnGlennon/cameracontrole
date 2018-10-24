@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.beans.HasProperty.hasProperty;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -28,13 +29,13 @@ public class FineWebControllerTest {
     @Test
     public void testCreateFine() throws Exception {
         FineDTO fineDTO = new FineDTO(new Offense(), 50);
-        String postJson = objectMapper.writeValueAsString(fineDTO);
+        String getJson = objectMapper.writeValueAsString(fineDTO);
 
-        mockMvc.perform(post("/fine/newfine.do")
-                .param("fineDTO", postJson))
+        mockMvc.perform(get("/finefactors")
+                .param("ffDTO", getJson))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/finelist.html"))
-                .andExpect(model().attribute("fineDTO",
-                        hasProperty("amount")));
+                .andExpect(view().name("redirect:/factors.html"))
+                .andExpect(model().attribute("ffDTO",
+                        hasProperty("emissionFactor")));
     }
 }

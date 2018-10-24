@@ -53,10 +53,6 @@ public class Fine {
         this.amount = amount;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public boolean isApproved() {
         return approved;
     }

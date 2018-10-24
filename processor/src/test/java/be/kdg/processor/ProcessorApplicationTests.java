@@ -15,13 +15,9 @@ import java.io.IOException;
 public class ProcessorApplicationTests {
 
     @Test
-    public void testCameraService() {
+    public void testCameraService() throws IOException {
         CameraServiceProxy cameraServiceProxy = new CameraServiceProxy();
-        try {
-            String cameraInfo = cameraServiceProxy.get(1);
-            Assert.assertNotNull(cameraInfo);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String cameraInfo = cameraServiceProxy.get(1);
+        Assert.assertNotNull(cameraInfo);
     }
 }

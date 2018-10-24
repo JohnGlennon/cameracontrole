@@ -27,7 +27,6 @@ public class Offense {
     public Offense() {
     }
 
-
     public Offense(String licensePlate, LocalDateTime timestamp, OffenseType offenseType) {
         this.licensePlate = licensePlate;
         this.timestamp = timestamp;

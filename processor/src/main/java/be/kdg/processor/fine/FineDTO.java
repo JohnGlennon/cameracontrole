@@ -7,14 +7,14 @@ import lombok.Data;
 public class FineDTO {
 
     private Offense offense;
-    private int amount;
+    private double amount;
     private boolean approved;
     private String motivation;
 
     public FineDTO() {
     }
 
-    public FineDTO(Offense offense, int amount) {
+    public FineDTO(Offense offense, double amount) {
         this.offense = offense;
         this.amount = amount;
     }
@@ -23,7 +23,7 @@ public class FineDTO {
         this.offense = offense;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
@@ -31,7 +31,7 @@ public class FineDTO {
         return offense;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
@@ -49,9 +49,5 @@ public class FineDTO {
 
     public void setMotivation(String motivation) {
         this.motivation = motivation;
-    }
-
-    public String toString() {
-        return String.valueOf(amount);
     }
 }

@@ -1,4 +1,4 @@
-package be.kdg.processor.listeners;
+package be.kdg.processor.managers;
 
 import be.kdg.processor.fine.FineManager;
 import be.kdg.processor.camera.Camera;
