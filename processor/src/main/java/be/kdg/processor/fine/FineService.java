@@ -50,4 +50,17 @@ public class FineService {
     public List<Fine> getFines() {
         return fineRepository.findAll();
     }
+
+    public Fine approveFine(Long id, boolean approved) throws FineException {
+        Fine fineIn = load(id);
+        fineIn.setApproved(approved);
+        return save(fineIn);
+    }
+
+    public Fine updateFine(Long id, double amount, String motivation) throws FineException {
+        Fine fineIn = load(id);
+        fineIn.setAmount(amount);
+        fineIn.setMotivation(motivation);
+        return save(fineIn);
+    }
 }

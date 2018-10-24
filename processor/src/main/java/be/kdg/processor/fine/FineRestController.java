@@ -60,10 +60,8 @@ public class FineRestController {
     @GetMapping("/fines/approve/{id}/{approved}")
     public ResponseEntity<FineDTO> approveFine(@PathVariable Long id, @PathVariable boolean approved) {
         try {
-            Fine fineIn = fineService.load(id);
-            fineIn.setApproved(approved);
-            Fine fineOut = fineService.save(fineIn);
-            return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
+            Fine fine = fineService.approveFine(id, approved);
+            return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.ACCEPTED);
         } catch (FineException e) {
             LOGGER.error(e.getMessage());
         }
@@ -71,13 +69,10 @@ public class FineRestController {
     }
 
     @GetMapping("/fines/update/{id}/{amount}/{motivation}")
-    public ResponseEntity<FineDTO> updateAmount(@PathVariable Long id, @PathVariable int amount, @PathVariable String motivation) {
+    public ResponseEntity<FineDTO> updateAmount(@PathVariable Long id, @PathVariable double amount, @PathVariable String motivation) {
         try {
-            Fine fineIn = fineService.load(id);
-            fineIn.setAmount(amount);
-            fineIn.setMotivation(motivation);
-            Fine fineOut = fineService.save(fineIn);
-            return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
+            Fine fine = fineService.updateFine(id, amount, motivation);
+            return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.ACCEPTED);
         } catch (FineException e) {
             e.printStackTrace();
         }
