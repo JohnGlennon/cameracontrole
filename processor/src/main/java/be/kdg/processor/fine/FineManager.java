@@ -73,7 +73,7 @@ public class FineManager {
             Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp, OffenseType.SPEED);
             int distance = camera.getSegment().getDistance();
             int speedLimit = camera.getSegment().getSpeedLimit();
-            double time = 1000;
+            double time = 0;
             double speed;
 
             for (Offense oldSpeedOffense : speedOffenses) {
@@ -90,10 +90,6 @@ public class FineManager {
             }
 
             speed = distance / time;
-            System.out.println(distance);
-            System.out.println(time);
-            System.out.println(speed);
-            System.out.println(speedLimit);
 
             Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
 
