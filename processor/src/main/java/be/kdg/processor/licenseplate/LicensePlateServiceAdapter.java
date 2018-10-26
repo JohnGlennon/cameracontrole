@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.Cacheable;
 import java.io.IOException;
 import java.util.Optional;
 
 @Component
+@Cacheable
 public class LicensePlateServiceAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicensePlateServiceAdapter.class);
 

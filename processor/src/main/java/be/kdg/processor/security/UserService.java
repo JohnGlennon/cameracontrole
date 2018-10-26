@@ -55,4 +55,14 @@ public class UserService implements UserDetailsService {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
+    public User changePassword(String username, String oldPassword, String newPassword) throws UserException {
+        User user = userRepository.findByUsername(username);
+        if (user.getPassword().equals(oldPassword)) {
+            user.setPassword(newPassword);
+            save(user);
+            return user;
+        }
+        throw new UserException("Old password is not correct.");
+    }
 }

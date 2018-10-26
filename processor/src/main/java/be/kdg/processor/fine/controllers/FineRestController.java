@@ -7,6 +7,8 @@ import be.kdg.processor.fine.LocalDateTimeConverter;
 import be.kdg.processor.fine.Fine;
 import be.kdg.processor.fine.FineService;
 import be.kdg.processor.security.User;
+import be.kdg.processor.security.UserDTO;
+import be.kdg.processor.security.UserException;
 import be.kdg.processor.security.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -91,8 +93,26 @@ public class FineRestController {
     }
 
     @GetMapping("/createadmin/{username}/{password}")
-    public User createAdmin(@PathVariable String username, @PathVariable String password) {
-        User user = userService.createAdmin(username, password);
-        return userService.save(user);
+    public ResponseEntity<UserDTO> createAdmin(@PathVariable String username, @PathVariable String password) {
+        User userIn = userService.createAdmin(username, password);
+        User userOut = userService.save(userIn);
+        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/readadmins")
+    public UserDTO[] readAdmins() {
+        List<User> users = userService.getUsers();
+        return modelMapper.map(users, UserDTO[].class);
+    }
+
+    @GetMapping("/changepassword/{username}/{oldpassword}/{newpassword}")
+    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String oldPassword, @PathVariable String newPassword) {
+        try {
+            User user = userService.changePassword(username, oldPassword, newPassword);
+            return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
