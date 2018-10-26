@@ -1,4 +1,4 @@
-package be.kdg.processor.offense.offensemodel;
+package be.kdg.processor.offense;
 
 public enum OffenseType {
     EMISSION, SPEED

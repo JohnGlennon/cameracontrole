@@ -1,7 +1,7 @@
 package be.kdg.processor.controllers.web;
 
 import be.kdg.processor.fine.dto.FineDTO;
-import be.kdg.processor.offense.offensemodel.Offense;
+import be.kdg.processor.offense.Offense;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;

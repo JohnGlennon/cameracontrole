@@ -2,8 +2,8 @@ package be.kdg.processor.fine;
 
 import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.licenseplate.Car;
-import be.kdg.processor.offense.offensemodel.Offense;
-import be.kdg.processor.offense.offensemodel.OffenseType;
+import be.kdg.processor.offense.Offense;
+import be.kdg.processor.offense.OffenseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
