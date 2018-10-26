@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class MessagingConfig {
-    private static String topicExchangeName = "cameratopic";
-    private static String queueName = "cameratopic.queue";
+    private static final String topicExchangeName = "cameratopic";
+    private static final String queueName = "cameratopic.queue";
 
     public static String getTopicExchangeName() {
         return topicExchangeName;

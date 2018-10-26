@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Component
 public class EmissionListener implements OffenseListener {
 
-    private FineManager fineManager;
+    private final FineManager fineManager;
 
     public EmissionListener(FineManager fineManager) {
         this.fineManager = fineManager;

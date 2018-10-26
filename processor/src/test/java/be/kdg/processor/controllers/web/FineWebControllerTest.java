@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.beans.HasProperty.hasProperty;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)

@@ -15,8 +15,8 @@ import java.util.Optional;
 public class LicensePlateServiceAdapter {
     private static final Logger LOGGER = LoggerFactory.getLogger(LicensePlateServiceAdapter.class);
 
-    private LicensePlateServiceProxy licensePlateServiceProxy;
-    private JsonDeserializer jsonDeserializer;
+    private final LicensePlateServiceProxy licensePlateServiceProxy;
+    private final JsonDeserializer jsonDeserializer;
 
     public LicensePlateServiceAdapter(LicensePlateServiceProxy licensePlateServiceProxy, JsonDeserializer jsonDeserializer) {
         this.licensePlateServiceProxy = licensePlateServiceProxy;

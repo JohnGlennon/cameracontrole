@@ -14,9 +14,9 @@ import java.util.Optional;
 @Component
 public class ObjectConverter {
 
-    private CameraServiceAdapter cameraServiceAdapter;
-    private LicensePlateServiceAdapter licensePlateServiceAdapter;
-    private List<OffenseListener> listeners;
+    private final CameraServiceAdapter cameraServiceAdapter;
+    private final LicensePlateServiceAdapter licensePlateServiceAdapter;
+    private final List<OffenseListener> listeners;
 
     public ObjectConverter(CameraServiceAdapter cameraServiceAdapter, LicensePlateServiceAdapter licensePlateServiceAdapter, List<OffenseListener> listeners) {
         this.cameraServiceAdapter = cameraServiceAdapter;

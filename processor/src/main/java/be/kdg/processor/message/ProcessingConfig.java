@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ProcessingConfig {
-    private static String queueName = "cameratopic.queue";
+    private static final String queueName = "cameratopic.queue";
 
     @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory, MessageListenerAdapter listenerAdapter) {

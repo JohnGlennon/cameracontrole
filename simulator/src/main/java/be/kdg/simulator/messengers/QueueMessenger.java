@@ -18,7 +18,7 @@ public class QueueMessenger implements Messenger {
     private static final Logger LOGGER = LoggerFactory.getLogger(QueueMessenger.class);
 
     private final MessageGenerator messageGenerator;
-    private XMLConverter xmlConverter;
+    private final XMLConverter xmlConverter;
     private final RabbitTemplate rabbitTemplate;
 
     public QueueMessenger(MessageGenerator messageGenerator, XMLConverter xmlConverter, RabbitTemplate rabbitTemplate) {

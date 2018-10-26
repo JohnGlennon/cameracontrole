@@ -14,8 +14,8 @@ import java.util.Optional;
 public class CameraServiceAdapter {
 private static final Logger LOGGER = LoggerFactory.getLogger(CameraServiceAdapter.class);
 
-    private JsonDeserializer jsonDeserializer;
-    private CameraServiceProxy cameraServiceProxy;
+    private final JsonDeserializer jsonDeserializer;
+    private final CameraServiceProxy cameraServiceProxy;
 
     public CameraServiceAdapter(JsonDeserializer jsonDeserializer, CameraServiceProxy cameraServiceProxy) {
         this.jsonDeserializer = jsonDeserializer;

@@ -12,8 +12,8 @@ public class Receiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
-    private XMLConverter xmlConverter;
-    private ObjectConverter objectConverter;
+    private final XMLConverter xmlConverter;
+    private final ObjectConverter objectConverter;
 
     public Receiver(XMLConverter xmlConverter, ObjectConverter objectConverter) {
         this.xmlConverter = xmlConverter;

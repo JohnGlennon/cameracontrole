@@ -1,9 +1,6 @@
 package be.kdg.processor.camera;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
-import javax.persistence.Entity;
 
 public class Segment {
     @JsonProperty("connectedCameraId")

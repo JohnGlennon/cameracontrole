@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @Component
 public class XMLConverter {
-    private XmlMapper mapper;
+    private final XmlMapper mapper;
 
     public XMLConverter() {
         mapper = new XmlMapper();

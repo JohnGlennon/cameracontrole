@@ -20,7 +20,7 @@ public class FileGenerator implements MessageGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FileGenerator.class);
 
-    private String filepath;
+    private final String filepath;
     private BufferedReader reader;
     private LocalDateTime localDateTime;
 

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 public class MessageScheduler {
 
     private ScheduledExecutorService scheduler;
-    private Messenger messenger;
+    private final Messenger messenger;
 
     @Value("${frequency}")
     private long frequency;
