@@ -1,4 +1,4 @@
-package be.kdg.processor.fine;
+package be.kdg.processor.fine.fineconverters;
 
 import org.springframework.stereotype.Component;
 

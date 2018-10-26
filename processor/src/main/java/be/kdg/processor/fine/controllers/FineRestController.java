@@ -1,5 +1,11 @@
-package be.kdg.processor.fine;
+package be.kdg.processor.fine.controllers;
 
+import be.kdg.processor.fine.FineFilter;
+import be.kdg.processor.fine.dto.FineDTO;
+import be.kdg.processor.fine.FineException;
+import be.kdg.processor.fine.fineconverters.LocalDateTimeConverter;
+import be.kdg.processor.fine.Fine;
+import be.kdg.processor.fine.FineService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

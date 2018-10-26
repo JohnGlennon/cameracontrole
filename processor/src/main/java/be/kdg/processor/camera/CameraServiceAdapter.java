@@ -1,5 +1,6 @@
 package be.kdg.processor.camera;
 
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.message.JsonDeserializer;
 import be.kdg.sa.services.CameraNotFoundException;
 import be.kdg.sa.services.CameraServiceProxy;

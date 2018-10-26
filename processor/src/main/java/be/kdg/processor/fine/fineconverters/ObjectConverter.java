@@ -1,10 +1,10 @@
-package be.kdg.processor.fine;
+package be.kdg.processor.fine.fineconverters;
 
 import be.kdg.processor.camera.CameraServiceAdapter;
 import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.licenseplate.LicensePlateServiceAdapter;
-import be.kdg.processor.offense.OffenseListener;
-import be.kdg.processor.camera.Camera;
+import be.kdg.processor.offense.listeners.OffenseListener;
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.message.CameraMessage;
 import org.springframework.stereotype.Component;
 

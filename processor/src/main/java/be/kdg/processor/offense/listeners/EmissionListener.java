@@ -1,6 +1,6 @@
-package be.kdg.processor.offense;
+package be.kdg.processor.offense.listeners;
 
-import be.kdg.processor.camera.Camera;
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.fine.FineManager;
 import be.kdg.processor.licenseplate.Car;
 import org.springframework.stereotype.Component;
@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 @Component
-public class SpeedListener implements OffenseListener {
+public class EmissionListener implements OffenseListener {
 
     private final FineManager fineManager;
 
-    public SpeedListener(FineManager fineManager) {
+    public EmissionListener(FineManager fineManager) {
         this.fineManager = fineManager;
     }
 
     @Override
     public void listen(Camera camera, Car car, LocalDateTime timestamp) {
-        fineManager.calculateSpeedFine(camera, car, timestamp);
+        fineManager.calculateEmissionFine(camera, car, timestamp);
     }
 }

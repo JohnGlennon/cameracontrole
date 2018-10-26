@@ -1,6 +1,6 @@
-package be.kdg.processor.offense;
+package be.kdg.processor.offense.listeners;
 
-import be.kdg.processor.camera.Camera;
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.licenseplate.Car;
 
 import java.time.LocalDateTime;

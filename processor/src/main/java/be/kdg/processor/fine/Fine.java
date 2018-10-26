@@ -1,6 +1,6 @@
 package be.kdg.processor.fine;
 
-import be.kdg.processor.offense.Offense;
+import be.kdg.processor.offense.offensemodel.Offense;
 import lombok.Data;
 
 import javax.persistence.*;

@@ -1,4 +1,4 @@
-package be.kdg.processor.offense;
+package be.kdg.processor.offense.offensemodel;
 
 import lombok.Data;
 

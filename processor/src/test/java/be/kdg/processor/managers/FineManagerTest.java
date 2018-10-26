@@ -1,7 +1,7 @@
 package be.kdg.processor.managers;
 
 import be.kdg.processor.fine.FineManager;
-import be.kdg.processor.camera.Camera;
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.fine.FineService;
 import be.kdg.processor.licenseplate.Car;
 import org.junit.Assert;

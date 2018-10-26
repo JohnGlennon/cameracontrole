@@ -1,6 +1,6 @@
 package be.kdg.processor.message;
 
-import be.kdg.processor.camera.Camera;
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.licenseplate.Car;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;

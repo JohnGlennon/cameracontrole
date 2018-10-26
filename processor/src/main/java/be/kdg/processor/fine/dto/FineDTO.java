@@ -1,6 +1,6 @@
-package be.kdg.processor.fine;
+package be.kdg.processor.fine.dto;
 
-import be.kdg.processor.offense.Offense;
+import be.kdg.processor.offense.offensemodel.Offense;
 import lombok.Data;
 
 @Data

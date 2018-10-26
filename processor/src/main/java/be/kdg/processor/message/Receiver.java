@@ -1,6 +1,6 @@
 package be.kdg.processor.message;
 
-import be.kdg.processor.fine.ObjectConverter;
+import be.kdg.processor.fine.fineconverters.ObjectConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
