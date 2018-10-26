@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +74,8 @@ public class FineManager {
             Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp, OffenseType.SPEED);
             int distance = camera.getSegment().getDistance();
             int speedLimit = camera.getSegment().getSpeedLimit();
-            double time = 0;
-            double speed;
+            double time;
+            double speed = 0;
 
             for (Offense oldSpeedOffense : speedOffenses) {
                 if (oldSpeedOffense.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
@@ -84,12 +85,11 @@ public class FineManager {
 
             for (Offense oldSpeedOffense : speedOffenses) {
                 if (oldSpeedOffense.getLicensePlate().equals(newSpeedOffense.getLicensePlate())) {
-                    Duration duration = Duration.between(oldSpeedOffense.getTimestamp(), newSpeedOffense.getTimestamp());
-                    time = (double) duration.getSeconds() / 3600;
+                    long delay = ChronoUnit.SECONDS.between(oldSpeedOffense.getTimestamp(), timestamp);
+                    time = (double) delay / 3600;
+                    speed = distance / time;
                 }
             }
-
-            speed = distance / time;
 
             Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
 

@@ -6,11 +6,14 @@ import be.kdg.processor.fine.FineException;
 import be.kdg.processor.fine.LocalDateTimeConverter;
 import be.kdg.processor.fine.Fine;
 import be.kdg.processor.fine.FineService;
+import be.kdg.processor.security.User;
+import be.kdg.processor.security.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +32,14 @@ public class FineRestController {
     private final ModelMapper modelMapper;
     private final LocalDateTimeConverter converter;
     private final FineFilter fineFilter;
+    private final UserService userService;
 
-    public FineRestController(FineService fineService, ModelMapper modelMapper, LocalDateTimeConverter converter, FineFilter fineFilter) {
+    public FineRestController(FineService fineService, ModelMapper modelMapper, LocalDateTimeConverter converter, FineFilter fineFilter, UserService userService) {
         this.fineService = fineService;
         this.modelMapper = modelMapper;
         this.converter = converter;
         this.fineFilter = fineFilter;
+        this.userService = userService;
     }
 
     @GetMapping("/fines/{id}")
@@ -83,5 +88,11 @@ public class FineRestController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/createadmin/{username}/{password}")
+    public User createAdmin(@PathVariable String username, @PathVariable String password) {
+        User user = userService.createAdmin(username, password);
+        return userService.save(user);
     }
 }
