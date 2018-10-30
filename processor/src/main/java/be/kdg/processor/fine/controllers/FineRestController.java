@@ -1,6 +1,5 @@
 package be.kdg.processor.fine.controllers;
 
-import be.kdg.processor.fine.FineFilter;
 import be.kdg.processor.fine.dto.FineDTO;
 import be.kdg.processor.fine.FineException;
 import be.kdg.processor.fine.LocalDateTimeConverter;
@@ -15,13 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -32,15 +29,11 @@ public class FineRestController {
 
     private final FineService fineService;
     private final ModelMapper modelMapper;
-    private final LocalDateTimeConverter converter;
-    private final FineFilter fineFilter;
     private final UserService userService;
 
-    public FineRestController(FineService fineService, ModelMapper modelMapper, LocalDateTimeConverter converter, FineFilter fineFilter, UserService userService) {
+    public FineRestController(FineService fineService, ModelMapper modelMapper, UserService userService) {
         this.fineService = fineService;
         this.modelMapper = modelMapper;
-        this.converter = converter;
-        this.fineFilter = fineFilter;
         this.userService = userService;
     }
 
@@ -63,11 +56,8 @@ public class FineRestController {
 
     @GetMapping("/fines/between/{from}/{till}")
     public FineDTO[] readFinesInInterval(@PathVariable String from, @PathVariable String till) {
-        LocalDateTime dFrom = converter.convertStringToLocalDateTime(from);
-        LocalDateTime dTill = converter.convertStringToLocalDateTime(till);
-        List<Fine> fines = fineService.getFines();
-        List<Fine> filteredFines = fineFilter.filterFineList(fines, dFrom, dTill);
-        return modelMapper.map(filteredFines, FineDTO[].class);
+        List<Fine> fines = fineService.getFinesInInterval(from, till);
+        return modelMapper.map(fines, FineDTO[].class);
     }
 
     @GetMapping("/fines/approve/{id}/{approved}")

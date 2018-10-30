@@ -60,8 +60,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         if (user.getPassword().equals(oldPassword)) {
             user.setPassword(newPassword);
-            save(user);
-            return user;
+            return save(user);
         }
         throw new UserException("Old password is not correct.");
     }

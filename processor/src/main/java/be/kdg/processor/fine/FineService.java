@@ -3,8 +3,10 @@ package be.kdg.processor.fine;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -14,9 +16,11 @@ public class FineService {
     private int speedfactor = 50;
 
     private final FineRepository fineRepository;
+    private final LocalDateTimeConverter converter;
 
-    public FineService(FineRepository fineRepository) {
+    public FineService(FineRepository fineRepository, LocalDateTimeConverter converter) {
         this.fineRepository = fineRepository;
+        this.converter = converter;
     }
 
     public Fine save(Fine fine) {
@@ -49,6 +53,13 @@ public class FineService {
 
     public List<Fine> getFines() {
         return fineRepository.findAll();
+    }
+
+    public List<Fine> getFinesInInterval(String from, String till) {
+        LocalDateTime dFrom = converter.convertStringToLocalDateTime(from);
+        LocalDateTime dTill = converter.convertStringToLocalDateTime(till);
+        List<Fine> fines = fineRepository.findAll();
+        return fines.stream().filter(fine -> fine.getOffense().getTimestamp().isAfter(dFrom) && fine.getOffense().getTimestamp().isBefore(dTill)).collect(Collectors.toList());
     }
 
     public Fine approveFine(Long id, boolean approved) throws FineException {
