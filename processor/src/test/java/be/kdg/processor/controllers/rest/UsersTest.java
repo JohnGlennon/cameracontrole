@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,7 +34,7 @@ public class UsersTest {
         UserDTO userDTO = new UserDTO("username", "password");
         String requestJson = objectMapper.writeValueAsString(userDTO);
 
-        mockMvc.perform(post("/api/createadmin")
+        mockMvc.perform(get("/api/createadmin")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andExpect(status().isCreated())
