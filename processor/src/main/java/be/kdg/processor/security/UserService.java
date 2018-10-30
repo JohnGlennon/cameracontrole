@@ -37,7 +37,9 @@ public class UserService implements UserDetailsService {
                 .password(password)
                 .roles("ADMIN")
                 .build();
-        return new User(userDetails.getUsername(), userDetails.getPassword());
+        User user = new User(userDetails.getUsername(), userDetails.getPassword());
+        save(user);
+        return user;
     }
 
     public User save(User user) {
@@ -56,12 +58,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User changePassword(String username, String oldPassword, String newPassword) throws UserException {
+    public User changePassword(String username, String newpassword) {
         User user = userRepository.findByUsername(username);
-        if (user.getPassword().equals(oldPassword)) {
-            user.setPassword(newPassword);
-            return save(user);
-        }
-        throw new UserException("Old password is not correct.");
+        user.setPassword(newpassword);
+        return save(user);
     }
 }

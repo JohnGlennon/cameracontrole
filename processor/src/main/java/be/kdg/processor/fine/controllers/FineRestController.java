@@ -84,9 +84,8 @@ public class FineRestController {
 
     @GetMapping("/createadmin/{username}/{password}")
     public ResponseEntity<UserDTO> createAdmin(@PathVariable String username, @PathVariable String password) {
-        User userIn = userService.createAdmin(username, password);
-        User userOut = userService.save(userIn);
-        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.CREATED);
+        User user = userService.createAdmin(username, password);
+        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.CREATED);
     }
 
     @GetMapping("/readadmins")
@@ -95,14 +94,9 @@ public class FineRestController {
         return modelMapper.map(users, UserDTO[].class);
     }
 
-    @GetMapping("/changepassword/{username}/{oldpassword}/{newpassword}")
-    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String oldPassword, @PathVariable String newPassword) {
-        try {
-            User user = userService.changePassword(username, oldPassword, newPassword);
-            return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
-        } catch (UserException e) {
-            e.printStackTrace();
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/changepassword/{username}/{newpassword}")
+    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String newpassword) {
+        User user = userService.changePassword(username, newpassword);
+        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
     }
 }
