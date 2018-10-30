@@ -99,4 +99,10 @@ public class FineRestController {
         User user = userService.changePassword(username, newpassword);
         return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("deleteadmin/{username}")
+    public ResponseEntity<UserDTO> deleteAdmin(@PathVariable String username) {
+        User user = userService.deleteUser(username);
+        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
+    }
 }

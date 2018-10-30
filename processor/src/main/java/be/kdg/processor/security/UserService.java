@@ -63,4 +63,10 @@ public class UserService implements UserDetailsService {
         user.setPassword(newpassword);
         return save(user);
     }
+
+    public User deleteUser(String username) {
+        User user = userRepository.findByUsername(username);
+        userRepository.delete(user);
+        return user;
+    }
 }
