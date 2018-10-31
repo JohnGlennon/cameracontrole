@@ -2,6 +2,7 @@ package be.kdg.processor.fine;
 
 import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.licenseplate.Car;
+import be.kdg.processor.message.CameraMessage;
 import be.kdg.processor.offense.Offense;
 import be.kdg.processor.offense.OffenseType;
 import org.slf4j.Logger;
@@ -21,8 +22,9 @@ public class FineManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(FineManager.class);
 
     private FineService fineService;
+
+    private List<CameraMessage> cameraMessages;
     private List<Offense> emissionOffenses;
-    private List<Offense> speedOffenses;
 
     @Value("${emissionTimeframe}")
     private int emissionTimeframe;
@@ -32,17 +34,17 @@ public class FineManager {
 
     public FineManager(FineService fineService) {
         this.fineService = fineService;
+        cameraMessages = new ArrayList<>();
         emissionOffenses = new ArrayList<>();
-        speedOffenses = new ArrayList<>();
     }
 
-    public int calculateEmissionFine(Camera camera, Car car, LocalDateTime timestamp) {
-        Offense newEmissionOffense = new Offense(car.getPlateId(), timestamp, OffenseType.EMISSION);
+    public int calculateEmissionFine(CameraMessage cameraMessage, Camera camera, Car car) {
         int fineAmount = 0;
         int euroNorm = camera.getEuroNorm();
         int euroNumber = car.getEuroNumber();
         if (euroNumber < euroNorm) {
             LOGGER.info("Emission Offense! Your euro number is too low!");
+            Offense newEmissionOffense = new Offense(car.getPlateId(), cameraMessage.getTimestamp(), OffenseType.EMISSION);
 
             boolean inList = false;
             Fine fine = new Fine(newEmissionOffense, fineService.getEmissionfactor());
@@ -69,36 +71,34 @@ public class FineManager {
         return fineAmount;
     }
 
-    public void calculateSpeedFine(Camera camera, Car car, LocalDateTime timestamp) {
+    public void calculateSpeedFine(CameraMessage newCameraMessage, Camera camera, Car car) {
         if (camera.getSegment() != null) {
-            Offense newSpeedOffense = new Offense(car.getPlateId(), timestamp, OffenseType.SPEED);
             int distance = camera.getSegment().getDistance();
             int speedLimit = camera.getSegment().getSpeedLimit();
             double time;
             double speed = 0;
 
-            for (Offense oldSpeedOffense : speedOffenses) {
-                if (oldSpeedOffense.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
-                    speedOffenses.remove(oldSpeedOffense);
+            for (CameraMessage oldCameraMessage : cameraMessages) {
+                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
+                    cameraMessages.remove(oldCameraMessage);
                 }
             }
 
-            for (Offense oldSpeedOffense : speedOffenses) {
-                if (oldSpeedOffense.getLicensePlate().equals(newSpeedOffense.getLicensePlate())) {
-                    long delay = ChronoUnit.SECONDS.between(oldSpeedOffense.getTimestamp(), timestamp);
+            for (CameraMessage oldCameraMessage : cameraMessages) {
+                if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
+                    long delay = ChronoUnit.SECONDS.between(oldCameraMessage.getTimestamp(), newCameraMessage.getTimestamp());
                     time = (double) delay / 3600;
                     speed = distance / time;
                 }
             }
 
-            Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
-
             if (speed > speedLimit) {
                 LOGGER.info("Speed Offense! You were driving too fast!");
+                Offense newSpeedOffense = new Offense(car.getPlateId(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
+                Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
                 fineService.save(fine);
             }
-
-            speedOffenses.add(newSpeedOffense);
         }
+        cameraMessages.add(newCameraMessage);
     }
 }

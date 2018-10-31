@@ -26,8 +26,8 @@ public class ObjectConverter {
         Optional<Camera> camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
         Optional<Car> car = licensePlateServiceAdapter.toCar(cameraMessage.getLicensePlate());
         if (camera.isPresent() && car.isPresent()) {
-            fineManager.calculateEmissionFine(camera.get(), car.get(), cameraMessage.getTimestamp());
-            fineManager.calculateSpeedFine(camera.get(), car.get(), cameraMessage.getTimestamp());
+            fineManager.calculateEmissionFine(cameraMessage, camera.get(), car.get());
+            fineManager.calculateSpeedFine(cameraMessage, camera.get(), car.get());
         }
     }
 }
