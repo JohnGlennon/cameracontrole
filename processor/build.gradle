@@ -53,5 +53,6 @@ dependencies {
     compile('org.webjars:jquery:3.0.0')
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
     compile("org.springframework.boot:spring-boot-starter-security")
+    testCompile("org.springframework.security:spring-security-test")
     testCompile(group: 'org.springframework.security', name: 'spring-security-test', version: '5.1.1.RELEASE')
 }
