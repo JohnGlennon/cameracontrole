@@ -34,9 +34,9 @@ public class UserRestController {
         return modelMapper.map(users, UserDTO[].class);
     }
 
-    @GetMapping("/changepassword/{username}/{newpassword}")
-    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String newpassword) {
-        User user = userService.changePassword(username, newpassword);
+    @GetMapping("/changepassword/{username}/{oldpassword}/{newpassword}")
+    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String oldpassword, @PathVariable String newpassword) {
+        User user = userService.changePassword(username, oldpassword, newpassword);
         return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
     }
 

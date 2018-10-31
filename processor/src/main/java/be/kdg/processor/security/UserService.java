@@ -21,25 +21,17 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (username.equals("admin")) {
-            return org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
-                    .username("admin")
-                    .password("admin123")
-                    .roles("ADMIN")
-                    .build();
-        }
-        throw new UsernameNotFoundException("Username not found.");
+        User user = userRepository.findByUsername(username);
+        return org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
+                .username(username)
+                .password(user.getPassword())
+                .roles("ADMIN")
+                .build();
     }
 
     public User createAdmin(String username, String password) {
-        UserDetails userDetails = org.springframework.security.core.userdetails.User.withDefaultPasswordEncoder()
-                .username(username)
-                .password(password)
-                .roles("ADMIN")
-                .build();
-        User user = new User(userDetails.getUsername(), userDetails.getPassword());
-        save(user);
-        return user;
+        User user = new User(username, password);
+        return save(user);
     }
 
     public User save(User user) {
@@ -58,9 +50,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User changePassword(String username, String newpassword) {
+    public User changePassword(String username, String oldpassword, String newpassword) {
         User user = userRepository.findByUsername(username);
-        user.setPassword(newpassword);
+        if (user.getPassword().equals(oldpassword)) {
+            user.setPassword(newpassword);
+        }
         return save(user);
     }
 

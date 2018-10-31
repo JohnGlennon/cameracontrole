@@ -13,7 +13,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/", "/home").permitAll()
+                .antMatchers("/api/fines/{id}",
+                        "/api/fines",
+                        "/api/fines/between/{from}/{till}",
+                        "/api/fines/approve/{id}/{approved}",
+                        "/api/fines/update/{id}/{amount}/{motivation}",
+                        "/api/readadmins",
+                        "/api/createadmin/{username}/{password}",
+                        "/api/changepassword/{username}/{oldpassword}/{newpassword}",
+                        "/api/deleteadmin/{username}").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
