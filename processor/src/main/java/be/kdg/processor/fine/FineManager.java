@@ -20,9 +20,9 @@ public class FineManager {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FineManager.class);
 
+    private FineService fineService;
     private List<Offense> emissionOffenses;
     private List<Offense> speedOffenses;
-    private FineService fineService;
 
     @Value("${emissionTimeframe}")
     private int emissionTimeframe;
@@ -31,9 +31,9 @@ public class FineManager {
     private int speedTimeframe;
 
     public FineManager(FineService fineService) {
+        this.fineService = fineService;
         emissionOffenses = new ArrayList<>();
         speedOffenses = new ArrayList<>();
-        this.fineService = fineService;
     }
 
     public int calculateEmissionFine(Camera camera, Car car, LocalDateTime timestamp) {
