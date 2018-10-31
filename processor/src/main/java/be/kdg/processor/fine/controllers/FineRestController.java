@@ -4,9 +4,6 @@ import be.kdg.processor.fine.Fine;
 import be.kdg.processor.fine.FineException;
 import be.kdg.processor.fine.FineService;
 import be.kdg.processor.fine.dto.FineDTO;
-import be.kdg.processor.security.User;
-import be.kdg.processor.security.UserDTO;
-import be.kdg.processor.security.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +24,10 @@ public class FineRestController {
 
     private final FineService fineService;
     private final ModelMapper modelMapper;
-    private final UserService userService;
 
-    public FineRestController(FineService fineService, ModelMapper modelMapper, UserService userService) {
+    public FineRestController(FineService fineService, ModelMapper modelMapper) {
         this.fineService = fineService;
         this.modelMapper = modelMapper;
-        this.userService = userService;
     }
 
     @GetMapping("/fines/{id}")
@@ -78,29 +73,5 @@ public class FineRestController {
             e.printStackTrace();
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping("/createadmin/{username}/{password}")
-    public ResponseEntity<UserDTO> createAdmin(@PathVariable String username, @PathVariable String password) {
-        User user = userService.createAdmin(username, password);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.CREATED);
-    }
-
-    @GetMapping("/readadmins")
-    public UserDTO[] readAdmins() {
-        List<User> users = userService.getUsers();
-        return modelMapper.map(users, UserDTO[].class);
-    }
-
-    @GetMapping("/changepassword/{username}/{newpassword}")
-    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String newpassword) {
-        User user = userService.changePassword(username, newpassword);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping("deleteadmin/{username}")
-    public ResponseEntity<UserDTO> deleteAdmin(@PathVariable String username) {
-        User user = userService.deleteUser(username);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
     }
 }
