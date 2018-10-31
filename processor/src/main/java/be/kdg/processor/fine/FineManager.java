@@ -24,6 +24,7 @@ public class FineManager {
     private FineService fineService;
 
     private List<CameraMessage> cameraMessages;
+    private List<Camera> cameras;
     private List<Offense> emissionOffenses;
 
     @Value("${emissionTimeframe}")
@@ -35,6 +36,7 @@ public class FineManager {
     public FineManager(FineService fineService) {
         this.fineService = fineService;
         cameraMessages = new ArrayList<>();
+        cameras = new ArrayList<>();
         emissionOffenses = new ArrayList<>();
     }
 
@@ -73,32 +75,43 @@ public class FineManager {
 
     public void calculateSpeedFine(CameraMessage newCameraMessage, Camera camera, Car car) {
         if (camera.getSegment() != null) {
-            int distance = camera.getSegment().getDistance();
-            int speedLimit = camera.getSegment().getSpeedLimit();
-            double time;
-            double speed = 0;
+            cameras.add(camera);
+        }
 
-            for (CameraMessage oldCameraMessage : cameraMessages) {
-                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
-                    cameraMessages.remove(oldCameraMessage);
-                }
-            }
+        double time;
+        double speed = 0;
+        int speedLimit = 0;
 
-            for (CameraMessage oldCameraMessage : cameraMessages) {
-                if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
-                    long delay = ChronoUnit.SECONDS.between(oldCameraMessage.getTimestamp(), newCameraMessage.getTimestamp());
-                    time = (double) delay / 3600;
-                    speed = distance / time;
-                }
-            }
-
-            if (speed > speedLimit) {
-                LOGGER.info("Speed Offense! You were driving too fast!");
-                Offense newSpeedOffense = new Offense(car.getPlateId(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
-                Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
-                fineService.save(fine);
+        for (CameraMessage oldCameraMessage : cameraMessages) {
+            if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
+                cameraMessages.remove(oldCameraMessage);
             }
         }
+
+        for (CameraMessage oldCameraMessage : cameraMessages) {
+            if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
+                for (Camera oldCamera : cameras) {
+                    if (oldCamera.getSegment().getConnectedCameraId() == camera.getCameraId()) {
+                        int distanceInMeter = oldCamera.getSegment().getDistance();
+                        double distanceInKilometer = (double) distanceInMeter / 1000;
+                        speedLimit = oldCamera.getSegment().getSpeedLimit();
+
+                        long delay = ChronoUnit.SECONDS.between(oldCameraMessage.getTimestamp(), newCameraMessage.getTimestamp());
+                        time = (double) delay / 3600;
+                        speed = distanceInKilometer / time;
+                    }
+                }
+
+            }
+        }
+
+        if (speed > speedLimit) {
+            LOGGER.info("Speed Offense! You were driving too fast!");
+            Offense newSpeedOffense = new Offense(car.getPlateId(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
+            Fine fine = new Fine(newSpeedOffense, (speed - speedLimit) * fineService.getSpeedfactor());
+            fineService.save(fine);
+        }
+
         cameraMessages.add(newCameraMessage);
     }
 }
