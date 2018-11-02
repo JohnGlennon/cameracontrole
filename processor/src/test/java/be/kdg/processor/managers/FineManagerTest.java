@@ -1,5 +1,6 @@
 package be.kdg.processor.managers;
 
+import be.kdg.processor.camera.cameramodel.Segment;
 import be.kdg.processor.fine.FineManager;
 import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.fine.FineService;
@@ -38,5 +39,31 @@ public class FineManagerTest {
         CameraMessage cameraMessage = new CameraMessage(10, "1-AAA-999", LocalDateTime.now());
         double amount = fineManager.calculateEmissionFine(cameraMessage);
         Assert.assertEquals(amount, fineService.getEmissionfactor(), 0.01);
+    }
+
+    @Test
+    public void testSpeedDetection() {
+        CameraMessage firstCameraMessage = new CameraMessage(10, "1-AAA-999", LocalDateTime.now());
+        CameraMessage secondCameraMessage = new CameraMessage(11, "1-AAA-999", LocalDateTime.now().plusMinutes(1));
+
+        Camera firstCamera = new Camera(1, null, new Segment(2, 2000, 70), 5);
+        Camera secondCamera = new Camera(2, null, null, 5);
+
+        fineManager.checkForSpeedOffense(firstCameraMessage, firstCamera);
+        boolean isDetected = fineManager.checkForSpeedOffense(secondCameraMessage, secondCamera);
+
+        Assert.assertTrue(isDetected);
+    }
+
+    @Test
+    public void testSpeedFineCalculation() {
+        CameraMessage cameraMessage = new CameraMessage(10, "1-AAA-999", LocalDateTime.now());
+        double speed = 90;
+        int speedLimit = 70;
+
+        double amount = fineManager.calculateSpeedFine(cameraMessage, speed, speedLimit);
+        double calculatedAmount = (speed - speedLimit) * fineService.getSpeedfactor();
+
+        Assert.assertEquals(amount, calculatedAmount, 0.01);
     }
 }

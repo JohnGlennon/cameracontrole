@@ -81,34 +81,34 @@ public class FineManager {
     }
 
     public boolean checkForSpeedOffense(CameraMessage newCameraMessage, Camera camera) {
-        if (camera.getSegment() != null) {
-            cameras.add(camera);
-        }
-
-        double time;
         double speed = 0;
         int speedLimit = 0;
 
-        for (CameraMessage oldCameraMessage : cameraMessages) {
-            if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
-                cameraMessages.remove(oldCameraMessage);
+        if (camera.getSegment() != null) {
+            cameras.add(camera);
+        } else {
+            double time;
+
+            for (CameraMessage oldCameraMessage : cameraMessages) {
+                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
+                    cameraMessages.remove(oldCameraMessage);
+                }
             }
-        }
 
-        for (CameraMessage oldCameraMessage : cameraMessages) {
-            if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
-                for (Camera oldCamera : cameras) {
-                    if (oldCamera.getSegment().getConnectedCameraId() == camera.getCameraId()) {
-                        int distanceInMeter = oldCamera.getSegment().getDistance();
-                        double distanceInKilometer = (double) distanceInMeter / 1000;
-                        speedLimit = oldCamera.getSegment().getSpeedLimit();
+            for (CameraMessage oldCameraMessage : cameraMessages) {
+                if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
+                    for (Camera oldCamera : cameras) {
+                        if (oldCamera.getSegment().getConnectedCameraId() == camera.getCameraId()) {
+                            int distanceInMeter = oldCamera.getSegment().getDistance();
+                            double distanceInKilometer = (double) distanceInMeter / 1000;
+                            speedLimit = oldCamera.getSegment().getSpeedLimit();
 
-                        long delay = ChronoUnit.SECONDS.between(oldCameraMessage.getTimestamp(), newCameraMessage.getTimestamp());
-                        time = (double) delay / 3600;
-                        speed = distanceInKilometer / time;
+                            long delay = ChronoUnit.SECONDS.between(oldCameraMessage.getTimestamp(), newCameraMessage.getTimestamp());
+                            time = (double) delay / 3600;
+                            speed = distanceInKilometer / time;
+                        }
                     }
                 }
-
             }
         }
 
