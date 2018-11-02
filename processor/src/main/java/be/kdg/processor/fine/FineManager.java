@@ -45,16 +45,16 @@ public class FineManager {
         int euroNumber = car.getEuroNumber();
         if (euroNumber < euroNorm) {
             LOGGER.info("Emission Offense! Your euro number is too low!");
-            calculateEmissionFine(cameraMessage, camera, car);
+            calculateEmissionFine(cameraMessage);
             return true;
         }
         return false;
     }
 
-    public int calculateEmissionFine(CameraMessage cameraMessage, Camera camera, Car car) {
+    public int calculateEmissionFine(CameraMessage cameraMessage) {
         int fineAmount = 0;
 
-        Offense newEmissionOffense = new Offense(car.getPlateId(), cameraMessage.getTimestamp(), OffenseType.EMISSION);
+        Offense newEmissionOffense = new Offense(cameraMessage.getLicensePlate(), cameraMessage.getTimestamp(), OffenseType.EMISSION);
         Fine fine = new Fine(newEmissionOffense, fineService.getEmissionfactor());
 
         boolean inList = false;
@@ -80,7 +80,7 @@ public class FineManager {
         return fineAmount;
     }
 
-    public boolean checkForSpeedOffense(CameraMessage newCameraMessage, Camera camera, Car car) {
+    public boolean checkForSpeedOffense(CameraMessage newCameraMessage, Camera camera) {
         if (camera.getSegment() != null) {
             cameras.add(camera);
         }
@@ -116,14 +116,14 @@ public class FineManager {
 
         if (speed > speedLimit) {
             LOGGER.info("Speed Offense! You were driving too fast!");
-            calculateSpeedFine(newCameraMessage, car, speed, speedLimit);
+            calculateSpeedFine(newCameraMessage, speed, speedLimit);
             return true;
         }
         return false;
     }
 
-    public double calculateSpeedFine(CameraMessage newCameraMessage, Car car, double speed, int speedLimit) {
-        Offense newSpeedOffense = new Offense(car.getPlateId(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
+    public double calculateSpeedFine(CameraMessage newCameraMessage, double speed, int speedLimit) {
+        Offense newSpeedOffense = new Offense(newCameraMessage.getLicensePlate(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
         double amount = (speed - speedLimit) * fineService.getSpeedfactor();
         Fine fine = new Fine(newSpeedOffense, amount);
         fineService.save(fine);

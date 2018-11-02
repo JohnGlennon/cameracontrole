@@ -15,11 +15,6 @@ public class Car {
     public Car() {
     }
 
-    public Car(String plateId, int euroNumber) {
-        this.plateId = plateId;
-        this.euroNumber = euroNumber;
-    }
-
     public Car(String plateId, String nationalNumber, int euroNumber) {
         this.plateId = plateId;
         this.nationalNumber = nationalNumber;

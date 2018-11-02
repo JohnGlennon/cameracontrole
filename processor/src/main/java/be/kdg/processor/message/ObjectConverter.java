@@ -27,7 +27,7 @@ public class ObjectConverter {
         Optional<Car> car = licensePlateServiceAdapter.toCar(cameraMessage.getLicensePlate());
         if (camera.isPresent() && car.isPresent()) {
             fineManager.checkForEmissionOffense(cameraMessage, camera.get(), car.get());
-            fineManager.checkForSpeedOffense(cameraMessage, camera.get(), car.get());
+            fineManager.checkForSpeedOffense(cameraMessage, camera.get());
         }
     }
 }
