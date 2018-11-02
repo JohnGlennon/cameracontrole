@@ -68,10 +68,10 @@ public class FineService {
         return save(fineOut);
     }
 
-    public Fine updateFine(Long id, double amount, String motivation) throws FineException {
-        Fine fineIn = load(id);
-        fineIn.setAmount(amount);
-        fineIn.setMotivation(motivation);
-        return save(fineIn);
+    public Fine updateFine(Fine fineIn) throws FineException {
+        Fine fineOut = load(fineIn.getId());
+        fineOut.setAmount(fineIn.getAmount());
+        fineOut.setMotivation(fineIn.getMotivation());
+        return save(fineOut);
     }
 }

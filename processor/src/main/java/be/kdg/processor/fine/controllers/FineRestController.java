@@ -62,10 +62,10 @@ public class FineRestController {
     }
 
     @PutMapping("/fines/updateamount")
-    public ResponseEntity<FineDTO> updateAmount(@PathVariable Long id, @PathVariable double amount, @PathVariable String motivation) {
+    public ResponseEntity<FineDTO> updateAmount(@RequestBody Fine fineIn) {
         try {
-            Fine fine = fineService.updateFine(id, amount, motivation);
-            return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.ACCEPTED);
+            Fine fineOut = fineService.updateFine(fineIn);
+            return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
         } catch (FineException e) {
             e.printStackTrace();
         }
