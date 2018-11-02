@@ -62,10 +62,10 @@ public class FineService {
         return fines.stream().filter(fine -> fine.getOffense().getTimestamp().isAfter(dFrom) && fine.getOffense().getTimestamp().isBefore(dTill)).collect(Collectors.toList());
     }
 
-    public Fine approveFine(Long id, boolean approved) throws FineException {
-        Fine fineIn = load(id);
-        fineIn.setApproved(approved);
-        return save(fineIn);
+    public Fine approveFine(Fine fineIn) throws FineException {
+        Fine fineOut = load(fineIn.getId());
+        fineOut.setApproved(true);
+        return save(fineOut);
     }
 
     public Fine updateFine(Long id, double amount, String motivation) throws FineException {

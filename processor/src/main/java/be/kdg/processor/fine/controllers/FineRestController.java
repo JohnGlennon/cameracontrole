@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,18 +50,18 @@ public class FineRestController {
         return modelMapper.map(fines, FineDTO[].class);
     }
 
-    @GetMapping("/fines/approve/{id}/{approved}")
-    public ResponseEntity<FineDTO> approveFine(@PathVariable Long id, @PathVariable boolean approved) {
+    @PutMapping("/fines/approve")
+    public ResponseEntity<FineDTO> approveFine(@RequestBody Fine fineIn) {
         try {
-            Fine fine = fineService.approveFine(id, approved);
-            return new ResponseEntity<>(modelMapper.map(fine, FineDTO.class), HttpStatus.ACCEPTED);
+            Fine fineOut = fineService.approveFine(fineIn);
+            return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.ACCEPTED);
         } catch (FineException e) {
             LOGGER.error(e.getMessage());
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/fines/update/{id}/{amount}/{motivation}")
+    @PutMapping("/fines/updateamount")
     public ResponseEntity<FineDTO> updateAmount(@PathVariable Long id, @PathVariable double amount, @PathVariable String motivation) {
         try {
             Fine fine = fineService.updateFine(id, amount, motivation);
