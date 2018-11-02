@@ -1,6 +1,7 @@
 package be.kdg.processor.controllers.web;
 
 import be.kdg.processor.fine.dto.FineDTO;
+import be.kdg.processor.fine.dto.FineFactorDTO;
 import be.kdg.processor.offense.Offense;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -27,10 +28,10 @@ public class FineWebControllerTest {
 
     @Test
     public void testCreateFine() throws Exception {
-        FineDTO fineDTO = new FineDTO(new Offense(), 50);
-        String getJson = objectMapper.writeValueAsString(fineDTO);
+        FineFactorDTO ffDTO = new FineFactorDTO(50, 50);
+        String getJson = objectMapper.writeValueAsString(ffDTO);
 
-        mockMvc.perform(get("/finefactors")
+        mockMvc.perform(get("/fine/finefactors")
                 .param("ffDTO", getJson))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/factors.html"))
