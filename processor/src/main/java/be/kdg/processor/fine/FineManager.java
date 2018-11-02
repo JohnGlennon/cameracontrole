@@ -40,6 +40,10 @@ public class FineManager {
         emissionOffenses = new ArrayList<>();
     }
 
+//    public boolean checkForEmissionFine(CameraMessage cameraMessage, Camera camera, Car car) {
+//        int euro
+//    }
+
     public int calculateEmissionFine(CameraMessage cameraMessage, Camera camera, Car car) {
         int fineAmount = 0;
         int euroNorm = camera.getEuroNorm();
