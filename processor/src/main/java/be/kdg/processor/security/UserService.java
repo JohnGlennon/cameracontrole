@@ -50,17 +50,15 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User changePassword(String username, String oldpassword, String newpassword) {
-        User user = userRepository.findByUsername(username);
-        if (user.getPassword().equals(oldpassword)) {
-            user.setPassword(newpassword);
-        }
-        return save(user);
+    public User changePassword(User userIn) {
+        User userOut = userRepository.findByUsername(userIn.getUsername());
+        userOut.setPassword(userIn.getPassword());
+        return save(userOut);
     }
 
-    public User deleteUser(String username) {
-        User user = userRepository.findByUsername(username);
-        userRepository.delete(user);
-        return user;
+    public User deleteUser(User userIn) {
+        User userOut = userRepository.findByUsername(userIn.getUsername());
+        userRepository.delete(userOut);
+        return userOut;
     }
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class FineService {
 
     private int emissionfactor = 50;
-    private int speedfactor = 50;
+    private int speedfactor = 1;
 
     private final FineRepository fineRepository;
     private final LocalDateTimeConverter converter;

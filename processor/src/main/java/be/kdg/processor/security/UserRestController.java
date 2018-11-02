@@ -3,10 +3,7 @@ package be.kdg.processor.security;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,10 +19,11 @@ public class UserRestController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/createadmin/{username}/{password}")
-    public ResponseEntity<UserDTO> createAdmin(@PathVariable String username, @PathVariable String password) {
-        User user = userService.createAdmin(username, password);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.CREATED);
+    @PostMapping("/createadmin")
+    public ResponseEntity<UserDTO> createAdmin(@RequestBody UserDTO userDTO) {
+        User userIn = modelMapper.map(userDTO, User.class);
+        User userOut = userService.save(userIn);
+        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.CREATED);
     }
 
     @GetMapping("/readadmins")
@@ -34,15 +32,17 @@ public class UserRestController {
         return modelMapper.map(users, UserDTO[].class);
     }
 
-    @GetMapping("/changepassword/{username}/{oldpassword}/{newpassword}")
-    public ResponseEntity<UserDTO> changePassword(@PathVariable String username, @PathVariable String oldpassword, @PathVariable String newpassword) {
-        User user = userService.changePassword(username, oldpassword, newpassword);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
+    @PutMapping("/changepassword")
+    public ResponseEntity<UserDTO> changePassword(@RequestBody UserDTO userDTO) {
+        User userIn = modelMapper.map(userDTO, User.class);
+        User userOut = userService.changePassword(userIn);
+        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("deleteadmin/{username}")
-    public ResponseEntity<UserDTO> deleteAdmin(@PathVariable String username) {
-        User user = userService.deleteUser(username);
-        return new ResponseEntity<>(modelMapper.map(user, UserDTO.class), HttpStatus.ACCEPTED);
+    @DeleteMapping("/deleteadmin")
+    public ResponseEntity<UserDTO> deleteAdmin(@RequestBody UserDTO userDTO) {
+        User userIn = modelMapper.map(userDTO, User.class);
+        User userOut = userService.deleteUser(userIn);
+        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.ACCEPTED);
     }
 }

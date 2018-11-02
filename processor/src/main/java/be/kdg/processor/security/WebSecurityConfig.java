@@ -19,9 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/fines/approve/{id}/{approved}",
                         "/api/fines/update/{id}/{amount}/{motivation}",
                         "/api/readadmins",
-                        "/api/createadmin/{username}/{password}",
-                        "/api/changepassword/{username}/{oldpassword}/{newpassword}",
-                        "/api/deleteadmin/{username}").permitAll()
+                        "/api/createadmin",
+                        "/api/changepassword",
+                        "/api/deleteadmin").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -30,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
+
+        http.csrf().disable();
     }
 
     @Bean
