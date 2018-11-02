@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FineManagerTest {
@@ -33,10 +35,8 @@ public class FineManagerTest {
 
     @Test
     public void testEmissionFineCalculation() {
-//        Camera camera = new Camera(1, null, null, 5);
-//        Car car = new Car("1-ABC-123", null, 4);
-//        CameraMessage cameraMessage = new CameraMessage(1, "1-ABC-123", null);
-//        double amount = fineManager.calculateEmissionFine(cameraMessage);
-//        Assert.assertEquals(amount, fineService.getEmissionfactor());
+        CameraMessage cameraMessage = new CameraMessage(10, "1-AAA-999", LocalDateTime.now());
+        double amount = fineManager.calculateEmissionFine(cameraMessage);
+        Assert.assertEquals(amount, fineService.getEmissionfactor(), 0.01);
     }
 }
