@@ -38,14 +38,6 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User load(Long id) throws UserException {
-        Optional<User> optionalUser = userRepository.findById(id);
-        if (optionalUser.isPresent()) {
-            return optionalUser.get();
-        }
-        throw new UserException("User not found.");
-    }
-
     public List<User> getUsers() {
         return userRepository.findAll();
     }

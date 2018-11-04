@@ -3,12 +3,12 @@ package be.kdg.processor.settings;
 public class SettingDTO {
 
     private String property;
-    private String value;
+    private int value;
 
     public SettingDTO() {
     }
 
-    public SettingDTO(String property, String value) {
+    public SettingDTO(String property, int value) {
         this.property = property;
         this.value = value;
     }
@@ -21,11 +21,11 @@ public class SettingDTO {
         this.property = property;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 }

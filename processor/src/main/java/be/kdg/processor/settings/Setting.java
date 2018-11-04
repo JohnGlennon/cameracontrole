@@ -14,12 +14,12 @@ public class Setting {
     private String property;
 
     @Column
-    private String value;
+    private int value;
 
     public Setting() {
     }
 
-    public Setting(String property, String value) {
+    public Setting(String property, int value) {
         this.property = property;
         this.value = value;
     }
@@ -32,11 +32,11 @@ public class Setting {
         this.property = property;
     }
 
-    public String getValue() {
+    public int getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(int value) {
         this.value = value;
     }
 }

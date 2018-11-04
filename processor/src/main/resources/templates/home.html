@@ -12,9 +12,11 @@
 <body>
 <h4 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h4>
 <h5>Welcome to our fines website!</h5>
-<h5>Fine</h5>
 <p>
     <a href="/fine/finefactors">finefactors</a>
+</p>
+<p>
+    <a href="/fine/timeframes">timeframes</a>
 </p>
 <form th:action="@{/logout}" method="post">
     <input type="submit" value="Sign Out"/>

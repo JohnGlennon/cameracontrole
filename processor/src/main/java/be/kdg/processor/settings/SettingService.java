@@ -39,7 +39,7 @@ public class SettingService {
     public int getEmissionFactor() {
         try {
             Setting setting = load("emissionfactor");
-            return Integer.parseInt(setting.getValue());
+            return setting.getValue();
         } catch (SettingException e) {
             LOGGER.error(e.getMessage());
         }
@@ -49,7 +49,27 @@ public class SettingService {
     public int getSpeedFactor() {
         try {
             Setting setting = load("speedfactor");
-            return Integer.parseInt(setting.getValue());
+            return setting.getValue();
+        } catch (SettingException e) {
+            LOGGER.error(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getEmissionTimeframe() {
+        try {
+            Setting setting = load("emissionTimeframe");
+            return setting.getValue();
+        } catch (SettingException e) {
+            LOGGER.error(e.getMessage());
+        }
+        return 0;
+    }
+
+    public int getSpeedTimeframe() {
+        try {
+            Setting setting = load("speedTimeframe");
+            return setting.getValue();
         } catch (SettingException e) {
             LOGGER.error(e.getMessage());
         }

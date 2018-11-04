@@ -12,9 +12,6 @@ import javax.persistence.Id;
 public class User {
 
     @Id
-    @GeneratedValue
-    private Long id;
-
     @Column
     private String username;
 

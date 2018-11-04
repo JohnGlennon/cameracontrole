@@ -23,11 +23,15 @@ public class ProcessorApplication {
     private UserService userService;
 
     @PostConstruct
-    private void postFineFactors() {
-        Setting emissionfactorSetting = new Setting("emissionfactor", "50");
-        Setting speedfactorSetting = new Setting("speedfactor", "1");
+    private void postSettings() {
+        Setting emissionfactorSetting = new Setting("emissionfactor", 50);
+        Setting speedfactorSetting = new Setting("speedfactor", 1);
+        Setting emissionTimeframeSetting = new Setting("emissionTimeframe", 24);
+        Setting speedTimeframeSetting = new Setting("speedTimeframe", 30);
         settingService.save(emissionfactorSetting);
         settingService.save(speedfactorSetting);
+        settingService.save(emissionTimeframeSetting);
+        settingService.save(speedTimeframeSetting);
     }
 
     @PostConstruct

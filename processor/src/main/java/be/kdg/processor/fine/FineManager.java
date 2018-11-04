@@ -30,12 +30,6 @@ public class FineManager {
     private List<Camera> cameras;
     private List<Offense> emissionOffenses;
 
-    @Value("${emissionTimeframe}")
-    private int emissionTimeframe;
-
-    @Value("${speedTimeframe}")
-    private int speedTimeframe;
-
     public FineManager(FineService fineService, SettingService settingService) {
         this.fineService = fineService;
         this.settingService = settingService;
@@ -68,7 +62,7 @@ public class FineManager {
                 inList = true;
                 Duration duration = Duration.between(oldEmissionOffense.getTimestamp(), newEmissionOffense.getTimestamp());
                 long hours = duration.getSeconds() / 3600;
-                if (hours > emissionTimeframe) {
+                if (hours > settingService.getEmissionTimeframe()) {
                     fineAmount += settingService.getEmissionFactor();
                     fineService.save(fine);
                 }
@@ -94,7 +88,7 @@ public class FineManager {
             double time;
 
             for (CameraMessage oldCameraMessage : cameraMessages) {
-                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(speedTimeframe))) {
+                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(settingService.getSpeedTimeframe()))) {
                     cameraMessages.remove(oldCameraMessage);
                 }
             }
