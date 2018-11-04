@@ -1,5 +1,6 @@
 package be.kdg.processor.fine;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,8 +13,11 @@ import java.util.stream.Collectors;
 @Transactional
 public class FineService {
 
-    private int emissionfactor = 50;
-    private int speedfactor = 1;
+    @Value("${emissionfactor}")
+    private int emissionfactor;
+
+    @Value("${speedfactor}")
+    private int speedfactor;
 
     private final FineRepository fineRepository;
     private final LocalDateTimeConverter converter;
@@ -41,14 +45,6 @@ public class FineService {
 
     public int getSpeedfactor() {
         return speedfactor;
-    }
-
-    public void setEmissionfactor(int emissionfactor) {
-        this.emissionfactor = emissionfactor;
-    }
-
-    public void setSpeedfactor(int speedfactor) {
-        this.speedfactor = speedfactor;
     }
 
     public List<Fine> getFines() {
