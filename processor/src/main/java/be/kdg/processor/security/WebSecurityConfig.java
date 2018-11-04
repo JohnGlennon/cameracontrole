@@ -12,16 +12,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/api/fines/{id}",
-                        "/api/fines",
-                        "/api/fines/between/{from}/{till}",
-                        "/api/fines/approve",
-                        "/api/fines/updateamount",
-                        "/api/readadmins",
-                        "/api/createadmin",
-                        "/api/changepassword",
-                        "/api/deleteadmin").permitAll()
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -30,8 +23,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .permitAll();
-
-        http.csrf().disable();
     }
 
     @Bean
