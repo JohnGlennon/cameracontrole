@@ -1,25 +1,14 @@
 package be.kdg.processor.settings;
 
-import lombok.Data;
+public class SettingDTO {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-@Data
-@Entity
-public class Setting {
-
-    @Id
     private String property;
-
-    @Column
     private String value;
 
-    public Setting() {
+    public SettingDTO() {
     }
 
-    public Setting(String property, String value) {
+    public SettingDTO(String property, String value) {
         this.property = property;
         this.value = value;
     }

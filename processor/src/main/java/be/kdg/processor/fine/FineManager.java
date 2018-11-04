@@ -5,6 +5,8 @@ import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.message.CameraMessage;
 import be.kdg.processor.offense.Offense;
 import be.kdg.processor.offense.OffenseType;
+import be.kdg.processor.settings.SettingException;
+import be.kdg.processor.settings.SettingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +24,7 @@ public class FineManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(FineManager.class);
 
     private FineService fineService;
+    private SettingService settingService;
 
     private List<CameraMessage> cameraMessages;
     private List<Camera> cameras;
@@ -33,8 +36,9 @@ public class FineManager {
     @Value("${speedTimeframe}")
     private int speedTimeframe;
 
-    public FineManager(FineService fineService) {
+    public FineManager(FineService fineService, SettingService settingService) {
         this.fineService = fineService;
+        this.settingService = settingService;
         cameraMessages = new ArrayList<>();
         cameras = new ArrayList<>();
         emissionOffenses = new ArrayList<>();
@@ -55,7 +59,7 @@ public class FineManager {
         int fineAmount = 0;
 
         Offense newEmissionOffense = new Offense(cameraMessage.getLicensePlate(), cameraMessage.getTimestamp(), OffenseType.EMISSION);
-        Fine fine = new Fine(newEmissionOffense, fineService.getEmissionfactor());
+        Fine fine = new Fine(newEmissionOffense, settingService.getEmissionFactor());
 
         boolean inList = false;
 
@@ -65,7 +69,7 @@ public class FineManager {
                 Duration duration = Duration.between(oldEmissionOffense.getTimestamp(), newEmissionOffense.getTimestamp());
                 long hours = duration.getSeconds() / 3600;
                 if (hours > emissionTimeframe) {
-                    fineAmount += fineService.getEmissionfactor();
+                    fineAmount += settingService.getEmissionFactor();
                     fineService.save(fine);
                 }
             }
@@ -73,7 +77,7 @@ public class FineManager {
 
         if (!inList) {
             fineService.save(fine);
-            fineAmount += fineService.getEmissionfactor();
+            fineAmount += settingService.getEmissionFactor();
         }
 
         emissionOffenses.add(newEmissionOffense);
@@ -124,7 +128,7 @@ public class FineManager {
 
     public double calculateSpeedFine(CameraMessage newCameraMessage, double speed, int speedLimit) {
         Offense newSpeedOffense = new Offense(newCameraMessage.getLicensePlate(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
-        double amount = (speed - speedLimit) * fineService.getSpeedfactor();
+        double amount = (speed - speedLimit) * settingService.getEmissionFactor();
         Fine fine = new Fine(newSpeedOffense, amount);
         fineService.save(fine);
         return amount;

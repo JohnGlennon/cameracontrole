@@ -1,7 +1,7 @@
 package be.kdg.processor.fine.controllers;
 
-import be.kdg.processor.fine.FineService;
 import be.kdg.processor.fine.dto.FineFactorDTO;
+import be.kdg.processor.settings.SettingService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +11,14 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/fine")
 public class FineWebController {
 
-    private final FineService fineService;
+    private final SettingService settingService;
 
-    public FineWebController(FineService fineService) {
-        this.fineService = fineService;
+    public FineWebController(SettingService settingService) {
+        this.settingService = settingService;
     }
 
     @GetMapping("/finefactors")
     public ModelAndView showOffenseFactors() {
-        return new ModelAndView("factors", "ffDTO", new FineFactorDTO(fineService.getEmissionfactor(), fineService.getSpeedfactor()));
+        return new ModelAndView("factors", "ffDTO", new FineFactorDTO(settingService.getEmissionFactor(), settingService.getSpeedFactor()));
     }
 }

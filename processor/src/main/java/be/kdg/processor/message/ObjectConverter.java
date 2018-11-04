@@ -5,6 +5,7 @@ import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.fine.FineManager;
 import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.licenseplate.LicensePlateServiceAdapter;
+import be.kdg.processor.settings.SettingException;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

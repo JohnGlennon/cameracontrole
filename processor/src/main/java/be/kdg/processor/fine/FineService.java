@@ -13,12 +13,6 @@ import java.util.stream.Collectors;
 @Transactional
 public class FineService {
 
-    @Value("${emissionfactor}")
-    private int emissionfactor;
-
-    @Value("${speedfactor}")
-    private int speedfactor;
-
     private final FineRepository fineRepository;
     private final LocalDateTimeConverter converter;
 
@@ -37,14 +31,6 @@ public class FineService {
             return optionalFine.get();
         }
         throw new FineException("Fine not found.");
-    }
-
-    public int getEmissionfactor() {
-        return emissionfactor;
-    }
-
-    public int getSpeedfactor() {
-        return speedfactor;
     }
 
     public List<Fine> getFines() {

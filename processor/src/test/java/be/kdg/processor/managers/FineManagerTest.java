@@ -6,6 +6,7 @@ import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.fine.FineService;
 import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.message.CameraMessage;
+import be.kdg.processor.settings.SettingService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,9 @@ public class FineManagerTest {
     @Autowired
     private FineService fineService;
 
+    @Autowired
+    private SettingService settingService;
+
     @Test
     public void testEmissionDetection() {
         Camera camera = new Camera(1, null, null, 5);
@@ -38,7 +42,7 @@ public class FineManagerTest {
     public void testEmissionFineCalculation() {
         CameraMessage cameraMessage = new CameraMessage(10, "1-AAA-999", LocalDateTime.now());
         double amount = fineManager.calculateEmissionFine(cameraMessage);
-        Assert.assertEquals(amount, fineService.getEmissionfactor(), 0.01);
+        Assert.assertEquals(amount, settingService.getEmissionFactor(), 0.01);
     }
 
     @Test
@@ -62,7 +66,7 @@ public class FineManagerTest {
         int speedLimit = 70;
 
         double amount = fineManager.calculateSpeedFine(cameraMessage, speed, speedLimit);
-        double calculatedAmount = (speed - speedLimit) * fineService.getSpeedfactor();
+        double calculatedAmount = (speed - speedLimit) * settingService.getSpeedFactor();
 
         Assert.assertEquals(amount, calculatedAmount, 0.01);
     }
