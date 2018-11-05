@@ -1,4 +1,4 @@
-package be.kdg.processor.fine.dto;
+package be.kdg.processor.fine;
 
 import be.kdg.processor.offense.Offense;
 import lombok.Data;

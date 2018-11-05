@@ -24,15 +24,16 @@ public class FineWebControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-//    @Test
-//    public void testChangeFineFactor() throws Exception {
-//        SettingsDTO settingsDTO = new SettingsDTO("emissionfactor", 50);
-//        String postJson = objectMapper.writeValueAsString(settingsDTO);
-//
-//        mockMvc.perform(post("/fine/finefactor.do")
-//                .param("settingsDTO", postJson))
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(view().name("factors"))
-//                .andExpect(model().attribute("ffDTO", hasProperty("emissionFactor")));
-//    }
+    @Test
+    public void testChangeFineFactor() throws Exception {
+        SettingsDTO settingsDTO = new SettingsDTO();
+        settingsDTO.addSetting("emissionFactor", 50);
+        String postJson = objectMapper.writeValueAsString(settingsDTO);
+
+        mockMvc.perform(post("/fine/setting.do")
+                .param("settingsDTO", postJson))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("home"))
+                .andExpect(model().attribute("settingsDTO", hasProperty("settings")));
+    }
 }

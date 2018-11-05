@@ -24,14 +24,12 @@ public class ProcessorApplication {
 
     @PostConstruct
     private void postSettings() {
-        Settings emissionfactorSettings = new Settings("emissionfactor", 50);
-        Settings speedfactorSettings = new Settings("speedfactor", 1);
-        Settings emissionTimeframeSettings = new Settings("emissionTimeframe", 24);
-        Settings speedTimeframeSettings = new Settings("speedTimeframe", 30);
-        settingsService.save(emissionfactorSettings);
-        settingsService.save(speedfactorSettings);
-        settingsService.save(emissionTimeframeSettings);
-        settingsService.save(speedTimeframeSettings);
+        Settings settings = new Settings();
+        settings.addSetting("emissionFactor", 50);
+        settings.addSetting("speedFactor", 1);
+        settings.addSetting("emissionTimeframe", 24);
+        settings.addSetting("speedTimeframe", 30);
+        settingsService.save(settings);
     }
 
     @PostConstruct

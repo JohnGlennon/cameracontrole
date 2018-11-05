@@ -62,7 +62,7 @@ public class FineManagerTest {
         int speedLimit = 70;
 
         double amount = fineManager.calculateSpeedFine(cameraMessage, speed, speedLimit);
-        double calculatedAmount = (speed - speedLimit) * settingsService.getEmissionFactor();
+        double calculatedAmount = (speed - speedLimit) * settingsService.getSpeedFactor();
 
         Assert.assertEquals(amount, calculatedAmount, 0.01);
     }

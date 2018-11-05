@@ -3,7 +3,7 @@ package be.kdg.processor.fine.controllers;
 import be.kdg.processor.fine.Fine;
 import be.kdg.processor.fine.FineException;
 import be.kdg.processor.fine.FineService;
-import be.kdg.processor.fine.dto.FineDTO;
+import be.kdg.processor.fine.FineDTO;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

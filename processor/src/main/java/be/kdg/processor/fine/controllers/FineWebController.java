@@ -26,19 +26,16 @@ public class FineWebController {
     }
 
     @GetMapping("/settings")
-    public ModelAndView showOffenseFactors() {
-        SettingsDTO settingsDTO = new SettingsDTO();
-        settingsDTO.addSetting("emissionFactor", settingsService.getEmissionFactor());
-        settingsDTO.addSetting("speedFactor", settingsService.getSpeedFactor());
-        settingsDTO.addSetting("emissionTimeframe", settingsService.getEmissionTimeframe());
-        settingsDTO.addSetting("speedTimeframe", settingsService.getSpeedTimeframe());
+    public ModelAndView showSettings() {
+        Settings settings = settingsService.getSettings();
+        SettingsDTO settingsDTO = modelMapper.map(settings, SettingsDTO.class);
         return new ModelAndView("settings", "settingsDTO", settingsDTO);
     }
 
     @PostMapping("/setting.do")
-    public ModelAndView changeFinefactors(@Valid @ModelAttribute SettingsDTO settingsDTO) {
-        Settings settings = modelMapper.map(settingsDTO, Settings.class);
-        settingsService.save(settings);
-        return new ModelAndView("settings", "settingsDTO", settingsDTO);
+    public ModelAndView changeSettings(@Valid @ModelAttribute SettingsDTO settingsDTO) {
+        Settings newSettings = modelMapper.map(settingsDTO, Settings.class);
+        settingsService.updateSettings(newSettings);
+        return new ModelAndView("home");
     }
 }

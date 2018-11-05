@@ -120,7 +120,7 @@ public class FineManager {
 
     public double calculateSpeedFine(CameraMessage newCameraMessage, double speed, int speedLimit) {
         Offense newSpeedOffense = new Offense(newCameraMessage.getLicensePlate(), newCameraMessage.getTimestamp(), OffenseType.SPEED);
-        double amount = (speed - speedLimit) * settingsService.getEmissionFactor();
+        double amount = (speed - speedLimit) * settingsService.getSpeedFactor();
         Fine fine = new Fine(newSpeedOffense, amount);
         fineService.save(fine);
         return amount;
