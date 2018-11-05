@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 @Data
 @Entity
-public class Setting {
+public class Settings {
 
     @Id
     @GeneratedValue
@@ -21,10 +21,10 @@ public class Setting {
     @Column
     private int value;
 
-    public Setting() {
+    public Settings() {
     }
 
-    public Setting(String property, int value) {
+    public Settings(String property, int value) {
         this.property = property;
         this.value = value;
     }

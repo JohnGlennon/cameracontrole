@@ -1,10 +1,8 @@
 package be.kdg.processor.fine.controllers;
 
-import be.kdg.processor.fine.dto.FineFactorDTO;
-import be.kdg.processor.fine.dto.TimeframeDTO;
-import be.kdg.processor.settings.Setting;
-import be.kdg.processor.settings.SettingDTO;
-import be.kdg.processor.settings.SettingService;
+import be.kdg.processor.settings.Settings;
+import be.kdg.processor.settings.SettingsDTO;
+import be.kdg.processor.settings.SettingsService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,28 +17,28 @@ import javax.validation.Valid;
 @RequestMapping("/fine")
 public class FineWebController {
 
-    private final SettingService settingService;
+    private final SettingsService settingsService;
     private final ModelMapper modelMapper;
 
-    public FineWebController(SettingService settingService, ModelMapper modelMapper) {
-        this.settingService = settingService;
+    public FineWebController(SettingsService settingsService, ModelMapper modelMapper) {
+        this.settingsService = settingsService;
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/finefactors")
+    @GetMapping("/settings")
     public ModelAndView showOffenseFactors() {
-        return new ModelAndView("factors", "ffDTO", new FineFactorDTO(settingService.getEmissionFactor(), settingService.getSpeedFactor()));
+        SettingsDTO settingsDTO = new SettingsDTO();
+        settingsDTO.addSetting("emissionFactor", settingsService.getEmissionFactor());
+        settingsDTO.addSetting("speedFactor", settingsService.getSpeedFactor());
+        settingsDTO.addSetting("emissionTimeframe", settingsService.getEmissionTimeframe());
+        settingsDTO.addSetting("speedTimeframe", settingsService.getSpeedTimeframe());
+        return new ModelAndView("settings", "settingsDTO", settingsDTO);
     }
 
-    @PostMapping("/finefactor.do")
-    public ModelAndView changeFinefactors(@Valid @ModelAttribute SettingDTO settingDTO) {
-        Setting setting = modelMapper.map(settingDTO, Setting.class);
-        settingService.save(setting);
-        return new ModelAndView("factors", "ffDTO", new FineFactorDTO(settingService.getEmissionFactor(), settingService.getSpeedFactor()));
-    }
-
-    @GetMapping("/timeframes")
-    public ModelAndView showTimeframes() {
-        return new ModelAndView("timeframes", "tfDTO", new TimeframeDTO(settingService.getEmissionTimeframe(), settingService.getSpeedTimeframe()));
+    @PostMapping("/setting.do")
+    public ModelAndView changeFinefactors(@Valid @ModelAttribute SettingsDTO settingsDTO) {
+        Settings settings = modelMapper.map(settingsDTO, Settings.class);
+        settingsService.save(settings);
+        return new ModelAndView("settings", "settingsDTO", settingsDTO);
     }
 }

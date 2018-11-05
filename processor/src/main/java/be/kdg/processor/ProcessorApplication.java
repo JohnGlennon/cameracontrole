@@ -2,8 +2,8 @@ package be.kdg.processor;
 
 import be.kdg.processor.security.User;
 import be.kdg.processor.security.UserService;
-import be.kdg.processor.settings.Setting;
-import be.kdg.processor.settings.SettingService;
+import be.kdg.processor.settings.Settings;
+import be.kdg.processor.settings.SettingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,21 +17,21 @@ public class ProcessorApplication {
     }
 
     @Autowired
-    private SettingService settingService;
+    private SettingsService settingsService;
 
     @Autowired
     private UserService userService;
 
     @PostConstruct
     private void postSettings() {
-        Setting emissionfactorSetting = new Setting("emissionfactor", 50);
-        Setting speedfactorSetting = new Setting("speedfactor", 1);
-        Setting emissionTimeframeSetting = new Setting("emissionTimeframe", 24);
-        Setting speedTimeframeSetting = new Setting("speedTimeframe", 30);
-        settingService.save(emissionfactorSetting);
-        settingService.save(speedfactorSetting);
-        settingService.save(emissionTimeframeSetting);
-        settingService.save(speedTimeframeSetting);
+        Settings emissionfactorSettings = new Settings("emissionfactor", 50);
+        Settings speedfactorSettings = new Settings("speedfactor", 1);
+        Settings emissionTimeframeSettings = new Settings("emissionTimeframe", 24);
+        Settings speedTimeframeSettings = new Settings("speedTimeframe", 30);
+        settingsService.save(emissionfactorSettings);
+        settingsService.save(speedfactorSettings);
+        settingsService.save(emissionTimeframeSettings);
+        settingsService.save(speedTimeframeSettings);
     }
 
     @PostConstruct
