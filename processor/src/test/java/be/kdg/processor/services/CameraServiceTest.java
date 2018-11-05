@@ -1,4 +1,4 @@
-package be.kdg.processor;
+package be.kdg.processor.services;
 
 import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.message.JsonDeserializer;
@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProcessorApplicationTests {
+public class CameraServiceTest {
 
     @Autowired
     private JsonDeserializer jsonDeserializer;

@@ -1,6 +1,5 @@
-package be.kdg.simulator;
+package be.kdg.simulator.generators;
 
-import be.kdg.simulator.generators.MessageGenerator;
 import be.kdg.simulator.model.CameraMessage;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,8 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SimulatorApplicationTests {
-
+public class RandomMessageGeneratorTest {
     @Autowired
     //Dit is Field Injection
     private MessageGenerator messageGenerator;
@@ -23,5 +21,4 @@ public class SimulatorApplicationTests {
         CameraMessage cameraMessage = messageGenerator.generate().get();
         Assert.assertTrue(cameraMessage.getLicensePlate().matches(regex));
     }
-
 }
