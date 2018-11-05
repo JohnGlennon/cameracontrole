@@ -29,6 +29,7 @@ public class ProcessorApplication {
         settings.addSetting("speedFactor", 1);
         settings.addSetting("emissionTimeframe", 24);
         settings.addSetting("speedTimeframe", 30);
+        settings.addSetting("retryCount", 5);
         settingsService.save(settings);
     }
 
