@@ -29,11 +29,6 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public User createAdmin(String username, String password) {
-        User user = new User(username, password);
-        return save(user);
-    }
-
     public User save(User user) {
         return userRepository.save(user);
     }

@@ -28,6 +28,12 @@ public class Fine {
     public Fine() {
     }
 
+    public Fine(Long id, Offense offense, double amount) {
+        this.id = id;
+        this.offense = offense;
+        this.amount = amount;
+    }
+
     public Fine(Offense offense, double amount) {
         this.offense = offense;
         this.amount = amount;

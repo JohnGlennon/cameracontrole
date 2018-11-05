@@ -1,8 +1,6 @@
 package be.kdg.processor.controllers.web;
 
-import be.kdg.processor.fine.dto.FineDTO;
-import be.kdg.processor.fine.dto.FineFactorDTO;
-import be.kdg.processor.offense.Offense;
+import be.kdg.processor.settings.SettingDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.beans.HasProperty.hasProperty;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -27,15 +25,14 @@ public class FineWebControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testCreateFine() throws Exception {
-        FineFactorDTO ffDTO = new FineFactorDTO(50, 50);
-        String getJson = objectMapper.writeValueAsString(ffDTO);
+    public void testChangeFineFactor() throws Exception {
+        SettingDTO settingDTO = new SettingDTO("emissionfactor", 50);
+        String postJson = objectMapper.writeValueAsString(settingDTO);
 
-        mockMvc.perform(get("/fine/finefactors")
-                .param("ffDTO", getJson))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/factors.html"))
-                .andExpect(model().attribute("ffDTO",
-                        hasProperty("emissionFactor")));
+        mockMvc.perform(post("/fine/finefactor.do")
+                .param("settingDTO", postJson))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(view().name("factors"))
+                .andExpect(model().attribute("ffDTO", hasProperty("emissionFactor")));
     }
 }

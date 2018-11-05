@@ -1,25 +1,31 @@
 package be.kdg.processor.settings;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class SettingDTO {
 
-    private Map<String, Integer> settings;
+    private String property;
+    private int value;
 
     public SettingDTO() {
-        settings = new HashMap<>();
     }
 
-    public SettingDTO(Map<String, Integer> settings) {
-        this.settings = settings;
+    public SettingDTO(String property, int value) {
+        this.property = property;
+        this.value = value;
     }
 
-    public Map<String, Integer> getSettings() {
-        return settings;
+    public String getProperty() {
+        return property;
     }
 
-    public void setSettings(Map<String, Integer> settings) {
-        this.settings = settings;
+    public void setProperty(String property) {
+        this.property = property;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

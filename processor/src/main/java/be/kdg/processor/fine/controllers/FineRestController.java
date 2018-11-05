@@ -50,6 +50,13 @@ public class FineRestController {
         return modelMapper.map(fines, FineDTO[].class);
     }
 
+    @PostMapping("/fines/createfine")
+    public ResponseEntity<FineDTO> createFine(@RequestBody FineDTO fineDTO) {
+        Fine fineIn = modelMapper.map(fineDTO, Fine.class);
+        Fine fineOut = fineService.save(fineIn);
+        return new ResponseEntity<>(modelMapper.map(fineOut, FineDTO.class), HttpStatus.CREATED);
+    }
+
     @PutMapping("/fines/approve")
     public ResponseEntity<FineDTO> approveFine(@RequestBody Fine fineIn) {
         try {

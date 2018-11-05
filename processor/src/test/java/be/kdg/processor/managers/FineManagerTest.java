@@ -1,9 +1,8 @@
 package be.kdg.processor.managers;
 
+import be.kdg.processor.camera.cameramodel.Camera;
 import be.kdg.processor.camera.cameramodel.Segment;
 import be.kdg.processor.fine.FineManager;
-import be.kdg.processor.camera.cameramodel.Camera;
-import be.kdg.processor.fine.FineService;
 import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.message.CameraMessage;
 import be.kdg.processor.settings.SettingService;
@@ -22,9 +21,6 @@ public class FineManagerTest {
 
     @Autowired
     private FineManager fineManager;
-
-    @Autowired
-    private FineService fineService;
 
     @Autowired
     private SettingService settingService;
@@ -66,7 +62,7 @@ public class FineManagerTest {
         int speedLimit = 70;
 
         double amount = fineManager.calculateSpeedFine(cameraMessage, speed, speedLimit);
-        double calculatedAmount = (speed - speedLimit) * settingService.getSpeedFactor();
+        double calculatedAmount = (speed - speedLimit) * settingService.getEmissionFactor();
 
         Assert.assertEquals(amount, calculatedAmount, 0.01);
     }

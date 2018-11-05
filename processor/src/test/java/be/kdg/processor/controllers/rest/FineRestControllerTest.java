@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,16 +33,16 @@ public class FineRestControllerTest {
     private ObjectMapper objectMapper;
 
     @Test
-    public void testApproveFine() throws Exception {
+    public void testCreateFine() throws Exception {
         Offense offense = new Offense("1-ABC-123", LocalDateTime.now(), OffenseType.EMISSION);
-        Fine fine = new Fine(offense, 50);
+        Fine fine = new Fine(1L, offense, 50);
 
         String requestJson = objectMapper.writeValueAsString(fine);
 
-        mockMvc.perform(put("/api/fines/approve")
+        mockMvc.perform(post("/api/fines/createfine")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isAccepted())
+                .andExpect(status().isCreated())
                 .andDo(print())
                 .andExpect(content().string(containsString("50")));
     }

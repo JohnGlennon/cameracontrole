@@ -5,11 +5,9 @@ import be.kdg.processor.licenseplate.Car;
 import be.kdg.processor.message.CameraMessage;
 import be.kdg.processor.offense.Offense;
 import be.kdg.processor.offense.OffenseType;
-import be.kdg.processor.settings.SettingException;
 import be.kdg.processor.settings.SettingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;

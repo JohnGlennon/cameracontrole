@@ -1,7 +1,6 @@
 package be.kdg.processor.controllers.rest;
 
 import be.kdg.processor.security.UserDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +30,7 @@ public class UsersTest {
 
     @Test
     public void testCreateAdmin() throws Exception {
-        UserDTO userDTO = new UserDTO("username", "password");
+        UserDTO userDTO = new UserDTO("glenn", "glenn");
         String requestJson = objectMapper.writeValueAsString(userDTO);
 
         mockMvc.perform(post("/api/createadmin")
@@ -39,18 +38,11 @@ public class UsersTest {
                 .content(requestJson))
                 .andExpect(status().isCreated())
                 .andDo(print())
-                .andExpect(content().string(containsString("username")));
+                .andExpect(content().string(containsString("glenn")));
     }
 
     @Test
     public void testReadAdmins() throws Exception {
-        UserDTO userDTO = new UserDTO("username", "password");
-        String requestJson = objectMapper.writeValueAsString(userDTO);
-
-        mockMvc.perform(post("/api/createadmin")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(requestJson));
-
         mockMvc.perform(get("/api/readadmins"))
                 .andDo(print())
                 .andExpect(content().string(containsString("username")));
@@ -58,13 +50,6 @@ public class UsersTest {
 
     @Test
     public void testChangePassword() throws Exception {
-        UserDTO userDTO = new UserDTO("username", "password");
-        String requestJson = objectMapper.writeValueAsString(userDTO);
-
-        mockMvc.perform(post("/api/createadmin")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(requestJson));
-
         UserDTO updatedUserDTO = new UserDTO("username", "pwd");
         String requestJsonUpdate = objectMapper.writeValueAsString(updatedUserDTO);
 
@@ -78,7 +63,7 @@ public class UsersTest {
 
     @Test
     public void testDeleteAdmin() throws Exception {
-        UserDTO userDTO = new UserDTO("username", "password");
+        UserDTO userDTO = new UserDTO("glenn", "glenn");
         String requestJson = objectMapper.writeValueAsString(userDTO);
 
         mockMvc.perform(post("/api/createadmin")
@@ -90,6 +75,6 @@ public class UsersTest {
                 .content(requestJson))
                 .andExpect(status().isGone())
                 .andDo(print())
-                .andExpect(content().string(containsString("username")));
+                .andExpect(content().string(containsString("glenn")));
     }
 }
