@@ -9,8 +9,10 @@
 <form action="#" th:action="setting.do" th:object="${settingsDTO}" method="post" class="form-group">
     <ol style="list-style-type: none" th:each="setting : *{settings}">
         <li><label th:for="${setting.key}" th:text="${setting.key}">example</label></li>
-        <li class="remove_m remove_p"><input th:id="${setting.key}" th:field="*{settings[__${setting.key}__]}"
-                                             th:value="${setting.value}"/></li>
+        <li class="remove_m remove_p"><label>
+            <input th:id="${setting.key}" th:field="*{settings[__${setting.key}__]}"
+                                                 th:value="${setting.value}"/>
+        </label></li>
     </ol>
 
     <input type="submit" value="Save" class="button-primary float-none"/>

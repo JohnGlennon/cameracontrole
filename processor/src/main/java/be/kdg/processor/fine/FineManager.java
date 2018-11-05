@@ -21,12 +21,12 @@ public class FineManager {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FineManager.class);
 
-    private FineService fineService;
-    private SettingsService settingsService;
+    private final FineService fineService;
+    private final SettingsService settingsService;
 
-    private List<CameraMessage> cameraMessages;
-    private List<Camera> cameras;
-    private List<Offense> emissionOffenses;
+    private final List<CameraMessage> cameraMessages;
+    private final List<Camera> cameras;
+    private final List<Offense> emissionOffenses;
 
     public FineManager(FineService fineService, SettingsService settingsService) {
         this.fineService = fineService;

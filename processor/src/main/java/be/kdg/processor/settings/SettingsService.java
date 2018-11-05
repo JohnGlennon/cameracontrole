@@ -13,8 +13,8 @@ public class SettingsService {
         this.settingsRepository = settingsRepository;
     }
 
-    public Settings save(Settings settings) {
-        return settingsRepository.save(settings);
+    public void save(Settings settings) {
+        settingsRepository.save(settings);
     }
 
     public Settings getSettings() {

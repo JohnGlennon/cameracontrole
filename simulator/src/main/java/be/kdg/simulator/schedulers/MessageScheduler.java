@@ -24,9 +24,9 @@ public class MessageScheduler {
     @Value("${faster_frequency}")
     private long fasterFrequency;
 
-    private LocalTime beginInterval;
+    private final LocalTime beginInterval;
 
-    private LocalTime endInterval;
+    private final LocalTime endInterval;
 
     public MessageScheduler(Messenger messenger, @Value("${begin_interval}") String beginInterval, @Value("${end_interval}") String endInterval) {
         this.messenger = messenger;
