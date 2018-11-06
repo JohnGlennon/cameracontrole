@@ -8,6 +8,7 @@ import be.kdg.processor.offense.OffenseType;
 import be.kdg.processor.settings.SettingsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class FineManager {
@@ -24,7 +26,7 @@ public class FineManager {
     private final FineService fineService;
     private final SettingsService settingsService;
 
-    private final List<CameraMessage> cameraMessages;
+    private List<CameraMessage> cameraMessages;
     private final List<Camera> cameras;
     private final List<Offense> emissionOffenses;
 
@@ -34,6 +36,11 @@ public class FineManager {
         cameraMessages = new ArrayList<>();
         cameras = new ArrayList<>();
         emissionOffenses = new ArrayList<>();
+    }
+
+    @Scheduled(fixedDelay = 30)
+    private void checkOnOldMessages() {
+        this.cameraMessages = this.cameraMessages.stream().filter(cm -> cm.getTimestamp().isAfter(LocalDateTime.now().minusMinutes(settingsService.getSpeedTimeframe()))).collect(Collectors.toList());
     }
 
     public boolean checkForEmissionOffense(CameraMessage cameraMessage, Camera camera, Car car) {
@@ -84,12 +91,6 @@ public class FineManager {
             cameras.add(camera);
         } else {
             double time;
-
-            for (CameraMessage oldCameraMessage : cameraMessages) {
-                if (oldCameraMessage.getTimestamp().isBefore(LocalDateTime.now().minusMinutes(settingsService.getSpeedTimeframe()))) {
-                    cameraMessages.remove(oldCameraMessage);
-                }
-            }
 
             for (CameraMessage oldCameraMessage : cameraMessages) {
                 if (oldCameraMessage.getLicensePlate().equals(newCameraMessage.getLicensePlate())) {
