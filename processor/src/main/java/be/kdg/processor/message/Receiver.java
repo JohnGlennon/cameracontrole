@@ -41,6 +41,8 @@ public class Receiver {
 
             fineManager.checkForSpeedOffense(cameraMessage, camera);
             fineManager.checkForEmissionOffense(cameraMessage, camera, car);
+            //Voor andere types overtredingen: hier  zouden nog methodes van de fineManager aangesproken kunnen worden
+            //met cameraMessage, camera en car als parameters.
         } catch (IOException | CameraNotFoundException | LicensePlateNotFoundException | InvalidLicensePlateException e) {
             LOGGER.error(e.getMessage());
         }

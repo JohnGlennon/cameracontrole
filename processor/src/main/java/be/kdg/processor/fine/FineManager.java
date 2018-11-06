@@ -126,4 +126,9 @@ public class FineManager {
         fineService.save(fine);
         return amount;
     }
+
+    //Voor andere types overtredingen: hier zouden nog methodes geplaatst kunnen worden voor de detectie
+    //van andere types overtredingen en de berekening van hun boetes.
+    //Vervolgens spreekt de methode die de boete berekent de methode "save" van fineService aan
+    //met de berekende boete als parameter. Zo wordt die boete opgeslagen.
 }
