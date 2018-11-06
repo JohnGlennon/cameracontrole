@@ -1,5 +1,13 @@
 package be.kdg.processor.message;
 
+import be.kdg.processor.camera.CameraServiceAdapter;
+import be.kdg.processor.camera.cameramodel.Camera;
+import be.kdg.processor.fine.FineManager;
+import be.kdg.processor.licenseplate.Car;
+import be.kdg.processor.licenseplate.LicensePlateServiceAdapter;
+import be.kdg.sa.services.CameraNotFoundException;
+import be.kdg.sa.services.InvalidLicensePlateException;
+import be.kdg.sa.services.LicensePlateNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -11,12 +19,16 @@ public class Receiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
+    private CameraServiceAdapter cameraServiceAdapter;
+    private LicensePlateServiceAdapter licensePlateServiceAdapter;
     private final XMLConverter xmlConverter;
-    private final ObjectConverter objectConverter;
+    private final FineManager fineManager;
 
-    public Receiver(XMLConverter xmlConverter, ObjectConverter objectConverter) {
+    public Receiver(CameraServiceAdapter cameraServiceAdapter, LicensePlateServiceAdapter licensePlateServiceAdapter, XMLConverter xmlConverter, FineManager fineManager) {
+        this.cameraServiceAdapter = cameraServiceAdapter;
+        this.licensePlateServiceAdapter = licensePlateServiceAdapter;
         this.xmlConverter = xmlConverter;
-        this.objectConverter = objectConverter;
+        this.fineManager = fineManager;
     }
 
     public void receiveMessage(String message) {
@@ -24,9 +36,13 @@ public class Receiver {
 
         try {
             CameraMessage cameraMessage = xmlConverter.convertXMLToMessage(message);
-            objectConverter.convert(cameraMessage);
-        } catch (IOException e) {
-            LOGGER.error("Error while converting XML to message.");
+            Camera camera = cameraServiceAdapter.toCamera(cameraMessage.getId());
+            Car car = licensePlateServiceAdapter.toCar(cameraMessage.getLicensePlate());
+
+            fineManager.checkForSpeedOffense(cameraMessage, camera);
+            fineManager.checkForEmissionOffense(cameraMessage, camera, car);
+        } catch (IOException | CameraNotFoundException | LicensePlateNotFoundException | InvalidLicensePlateException e) {
+            LOGGER.error(e.getMessage());
         }
     }
 }

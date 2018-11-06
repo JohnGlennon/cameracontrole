@@ -56,4 +56,8 @@ public class Settings {
     public int getRetryCount() {
         return settings.get("retryCount");
     }
+
+    public int getRetryDelay() {
+        return settings.get("retryDelay");
+    }
 }

@@ -46,6 +46,11 @@ public class SettingsService {
         return settings.getRetryCount();
     }
 
+    public int getRetryDelay() {
+        Settings settings = getSettings();
+        return settings.getRetryDelay();
+    }
+
     public void updateSettings(Settings newSettings) {
         Settings oldSettings = getSettings();
         oldSettings.setSettings(newSettings.getSettings());
