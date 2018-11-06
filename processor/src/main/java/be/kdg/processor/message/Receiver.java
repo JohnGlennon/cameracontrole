@@ -19,8 +19,8 @@ public class Receiver {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
-    private CameraServiceAdapter cameraServiceAdapter;
-    private LicensePlateServiceAdapter licensePlateServiceAdapter;
+    private final CameraServiceAdapter cameraServiceAdapter;
+    private final LicensePlateServiceAdapter licensePlateServiceAdapter;
     private final XMLConverter xmlConverter;
     private final FineManager fineManager;
 

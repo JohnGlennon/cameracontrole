@@ -43,6 +43,6 @@ public class UserRestController {
     public ResponseEntity<UserDTO> deleteAdmin(@RequestBody UserDTO userDTO) {
         User userIn = modelMapper.map(userDTO, User.class);
         User userOut = userService.deleteUser(userIn);
-        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.GONE);
+        return new ResponseEntity<>(modelMapper.map(userOut, UserDTO.class), HttpStatus.OK);
     }
 }

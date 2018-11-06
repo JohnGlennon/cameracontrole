@@ -69,7 +69,7 @@ public class UsersTest {
         mockMvc.perform(delete("/api/deleteadmin")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson))
-                .andExpect(status().isGone())
+                .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().string(containsString("testuser")));
     }
