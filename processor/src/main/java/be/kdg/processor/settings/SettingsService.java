@@ -41,6 +41,11 @@ public class SettingsService {
         return settings.getSpeedTimeframe();
     }
 
+    public int getRetryCount() {
+        Settings settings = getSettings();
+        return settings.getRetryCount();
+    }
+
     public void updateSettings(Settings newSettings) {
         Settings oldSettings = getSettings();
         oldSettings.setSettings(newSettings.getSettings());

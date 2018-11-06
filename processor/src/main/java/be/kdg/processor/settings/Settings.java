@@ -52,4 +52,8 @@ public class Settings {
     public int getSpeedTimeframe() {
         return settings.get("speedTimeframe");
     }
+
+    public int getRetryCount() {
+        return settings.get("retryCount");
+    }
 }

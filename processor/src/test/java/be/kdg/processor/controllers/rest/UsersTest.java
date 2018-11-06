@@ -63,18 +63,14 @@ public class UsersTest {
 
     @Test
     public void testDeleteAdmin() throws Exception {
-        UserDTO userDTO = new UserDTO("glenn", "glenn");
+        UserDTO userDTO = new UserDTO("testuser", "testpwd");
         String requestJson = objectMapper.writeValueAsString(userDTO);
-
-        mockMvc.perform(post("/api/createadmin")
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(requestJson));
 
         mockMvc.perform(delete("/api/deleteadmin")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(requestJson))
                 .andExpect(status().isGone())
                 .andDo(print())
-                .andExpect(content().string(containsString("glenn")));
+                .andExpect(content().string(containsString("testuser")));
     }
 }

@@ -29,13 +29,15 @@ public class ProcessorApplication {
         settings.addSetting("speedFactor", 1);
         settings.addSetting("emissionTimeframe", 24);
         settings.addSetting("speedTimeframe", 30);
-        settings.addSetting("retryCount", 5);
+        settings.addSetting("retryCount", 3);
         settingsService.save(settings);
     }
 
     @PostConstruct
     private void postAdmin() {
         User user = new User("username", "password");
+        User testuser = new User("testuser", "testpwd");
         userService.save(user);
+        userService.save(testuser);
     }
 }
